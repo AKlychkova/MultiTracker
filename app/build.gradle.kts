@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     val nav_version = "2.7.7"
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")

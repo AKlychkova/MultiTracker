@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "ru.hse.multitracker"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ru.hse.multitracker"

@@ -1,4 +1,4 @@
-package ru.hse.multitracker.UI.elements
+package ru.hse.multitracker.ui.elements
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

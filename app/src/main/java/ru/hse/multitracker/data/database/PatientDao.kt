@@ -8,15 +8,11 @@ import androidx.room.Transaction
 import androidx.room.Update
 import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.database.entities.PatientWithTestSessions
-import ru.hse.multitracker.data.database.entities.TestSession
 
 @Dao
 interface PatientDao {
     @Insert
     suspend fun insertPatient(patient: Patient)
-
-    @Insert
-    suspend fun insertTestSession(session: TestSession)
 
     @Update
     suspend fun updatePatient(patient: Patient)
@@ -26,9 +22,6 @@ interface PatientDao {
 
     @Query("SELECT * FROM patients")
     suspend fun getPatients(): List<Patient>
-
-    @Query("SELECT * from sessions WHERE id = :id")
-    suspend fun getSession(id: Int): TestSession
 
     @Transaction
     @Query("SELECT * FROM patients")

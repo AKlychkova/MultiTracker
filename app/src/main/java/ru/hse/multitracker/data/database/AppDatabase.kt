@@ -10,4 +10,5 @@ import ru.hse.multitracker.data.database.entities.TestSession
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun patientDao(): PatientDao
+    abstract fun testSessionDao(): TestSessionDao
 }

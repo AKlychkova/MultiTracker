@@ -1,0 +1,17 @@
+package ru.hse.multitracker.data.repositories
+
+import androidx.annotation.WorkerThread
+import ru.hse.multitracker.data.database.TestSessionDao
+import ru.hse.multitracker.data.database.entities.TestSession
+
+class TestSessionRepository (private val testSessionDao: TestSessionDao){
+    @WorkerThread
+    suspend fun insert(session: TestSession): Long {
+        return testSessionDao.insertTestSession(session)
+    }
+
+    @WorkerThread
+    suspend fun getSession(id: Long): TestSession {
+        return testSessionDao.getSession(id)
+    }
+}

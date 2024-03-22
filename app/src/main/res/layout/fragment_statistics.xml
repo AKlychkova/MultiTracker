@@ -1,6 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.elements.StatisticsFragment" />
+    tools:context=".ui.elements.StatisticsFragment">
+
+    <TextView
+        android:id="@+id/best_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/best"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accuracy_best_textview"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/accuracy_best_textview" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/grey"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.35" />
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="197dp"
+        android:layout_height="63dp"
+        android:text="@string/update"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/accurcy_mean_textview" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="197dp"
+        android:layout_height="63dp"
+        android:text="@string/delete"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/update_button" />
+
+    <TextView
+        android:id="@+id/accuracy_worst_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/accurcy_mean_textview"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_best_textview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_best_textview"
+        app:layout_constraintTop_toBottomOf="@+id/accuracy_best_textview" />
+
+    <TextView
+        android:id="@+id/accurcy_mean_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/update_button"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_worst_textview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_worst_textview"
+        app:layout_constraintTop_toBottomOf="@+id/accuracy_worst_textview" />
+
+    <TextView
+        android:id="@+id/reaction_mean_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accurcy_mean_textview"
+        app:layout_constraintEnd_toEndOf="@+id/reaction_worst_textview"
+        app:layout_constraintStart_toStartOf="@+id/reaction_worst_textview"
+        app:layout_constraintTop_toTopOf="@+id/accurcy_mean_textview" />
+
+    <TextView
+        android:id="@+id/accuracy_best_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/accuracy_worst_textview"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_textview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_textview"
+        app:layout_constraintTop_toBottomOf="@+id/accuracy_textview" />
+
+    <TextView
+        android:id="@+id/reaction_worst_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accuracy_worst_textview"
+        app:layout_constraintEnd_toEndOf="@+id/reaction_best_textview"
+        app:layout_constraintStart_toStartOf="@+id/reaction_best_textview"
+        app:layout_constraintTop_toTopOf="@+id/accuracy_worst_textview" />
+
+    <TextView
+        android:id="@+id/reaction_best_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accuracy_best_textview"
+        app:layout_constraintEnd_toEndOf="@+id/reaction_textview"
+        app:layout_constraintStart_toStartOf="@+id/reaction_textview"
+        app:layout_constraintTop_toTopOf="@+id/accuracy_best_textview" />
+
+    <TextView
+        android:id="@+id/accuracy_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/accuracy"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/reaction_textview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/best_textview"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reaction_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/reaction_time"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/accuracy_textview"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worst_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/worst"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accuracy_worst_textview"
+        app:layout_constraintStart_toStartOf="@+id/best_textview"
+        app:layout_constraintTop_toTopOf="@+id/accuracy_worst_textview" />
+
+    <TextView
+        android:id="@+id/mean_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mean"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accurcy_mean_textview"
+        app:layout_constraintStart_toStartOf="@+id/worst_textview"
+        app:layout_constraintTop_toTopOf="@+id/accurcy_mean_textview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

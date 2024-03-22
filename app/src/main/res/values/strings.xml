@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">MultiTracker</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test_button_text">Тестирование</string>
+    <string name="statistics_button_text">Статистика</string>
+    <string name="accuracy">Точность</string>
+    <string name="reaction_time">Время реакции</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="best">Лучшее:</string>
+    <string name="worst">Худшее:</string>
+    <string name="mean">Среднее:</string>
 </resources>

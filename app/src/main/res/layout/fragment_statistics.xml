@@ -6,16 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.elements.StatisticsFragment">
 
-    <TextView
-        android:id="@+id/best_textview"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/statistics_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="@string/best"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/accuracy_best_textview"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toTopOf="@+id/accuracy_best_textview" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="best_textview,update_button,delete_button,accuracy_worst_textview,accurcy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -26,7 +22,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.35" />
+        app:layout_constraintWidth_percent="0.35" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/best_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/best"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accuracy_best_textview"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/accuracy_best_textview" />
 
     <Button
         android:id="@+id/update_button"

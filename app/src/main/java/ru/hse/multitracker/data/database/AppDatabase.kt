@@ -27,9 +27,11 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "word_database"
+                    "multitracker_database"
                 ).build()
-                INSTANCE = instance
+                if(INSTANCE == null) {
+                    INSTANCE = instance
+                }
                 // return instance
                 instance
             }

@@ -16,7 +16,7 @@ import java.util.Date
     )]
 )
 data class TestSession(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "date") val date: Date,
     @ColumnInfo(name = "target_amount") val targetAmount: Int,
     @ColumnInfo(name = "total_amount") val totalAmount: Int,
@@ -24,5 +24,5 @@ data class TestSession(
     @ColumnInfo(name = "movement_time") val movementTime: Int,
     @ColumnInfo(name = "accuracy") val accuracy: Double,
     @ColumnInfo(name = "reaction_time") val reactionTime: Int,
-    @ColumnInfo(name = "patient_id") val patientId: Int
+    @ColumnInfo(name = "patient_id") val patientId: Long
 )

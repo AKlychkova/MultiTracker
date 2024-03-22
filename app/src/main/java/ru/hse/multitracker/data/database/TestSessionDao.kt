@@ -8,8 +8,8 @@ import ru.hse.multitracker.data.database.entities.TestSession
 @Dao
 interface TestSessionDao {
     @Insert
-    suspend fun insertTestSession(session: TestSession)
+    suspend fun insertTestSession(session: TestSession) : Long
 
     @Query("SELECT * from sessions WHERE id = :id")
-    suspend fun getSession(id: Int): TestSession
+    suspend fun getSession(id: Long): TestSession
 }

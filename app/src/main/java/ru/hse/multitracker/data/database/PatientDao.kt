@@ -13,7 +13,7 @@ import ru.hse.multitracker.data.database.entities.PatientWithTestSessions
 @Dao
 interface PatientDao {
     @Insert
-    suspend fun insertPatient(patient: Patient)
+    suspend fun insertPatient(patient: Patient): Long
 
     @Update
     suspend fun updatePatient(patient: Patient)
@@ -21,7 +21,7 @@ interface PatientDao {
     @Delete
     suspend fun deletePatient(patient: Patient)
 
-    @Query("SELECT * FROM patients")
+    @Query("SELECT * FROM patients ORDER BY surname, name, patronymic")
     fun getPatients(): Flow<List<Patient>>
 
     @Transaction
@@ -30,5 +30,5 @@ interface PatientDao {
 
     @Transaction
     @Query("SELECT * FROM patients WHERE id = :id")
-    suspend fun getPatientWithTestSessions(id: Int): PatientWithTestSessions
+    suspend fun getPatientWithTestSessions(id: Long): PatientWithTestSessions
 }

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.database.entities.PatientWithTestSessions
 
@@ -21,7 +22,7 @@ interface PatientDao {
     suspend fun deletePatient(patient: Patient)
 
     @Query("SELECT * FROM patients")
-    suspend fun getPatients(): List<Patient>
+    fun getPatients(): Flow<List<Patient>>
 
     @Transaction
     @Query("SELECT * FROM patients")
@@ -29,5 +30,5 @@ interface PatientDao {
 
     @Transaction
     @Query("SELECT * FROM patients WHERE id = :id")
-    suspend fun getPatientsWithTestSessions(id: Int): PatientWithTestSessions
+    suspend fun getPatientWithTestSessions(id: Int): PatientWithTestSessions
 }

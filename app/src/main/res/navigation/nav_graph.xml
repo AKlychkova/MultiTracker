@@ -45,7 +45,14 @@
         android:id="@+id/formFragment"
         android:name="ru.hse.multitracker.ui.elements.FormFragment"
         android:label="fragment_form"
-        tools:layout="@layout/fragment_form" />
+        tools:layout="@layout/fragment_form" >
+        <action
+            android:id="@+id/action_formFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_formFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/testingFragment"
         android:name="ru.hse.multitracker.ui.elements.TestingFragment"

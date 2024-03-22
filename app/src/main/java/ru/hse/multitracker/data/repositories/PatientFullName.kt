@@ -4,7 +4,7 @@ import ru.hse.multitracker.data.database.entities.Patient
 
 
 data class PatientFullName (
-    val id: Int,
+    val id: Long,
     val name: String,
     val surname: String,
     val patronymic: String?

@@ -24,6 +24,9 @@ interface PatientDao {
     @Query("SELECT * FROM patients ORDER BY surname, name, patronymic")
     fun getPatients(): Flow<List<Patient>>
 
+    @Query("SELECT * FROM patients WHERE id = :id")
+    suspend fun getPatient(id: Long) : Patient
+
     @Transaction
     @Query("SELECT * FROM patients")
     suspend fun getPatientsWithTestSessions(): List<PatientWithTestSessions>

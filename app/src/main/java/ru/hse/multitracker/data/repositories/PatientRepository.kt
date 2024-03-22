@@ -36,4 +36,9 @@ class PatientRepository (private val patientDao: PatientDao) {
     suspend fun getAllPatientsWithTestSessions(): List<PatientWithTestSessions> {
         return patientDao.getPatientsWithTestSessions()
     }
+
+    @WorkerThread
+    suspend fun getPatient(id: Long): Patient {
+        return patientDao.getPatient(id)
+    }
 }

@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.ItemPatientNameBinding
 
-class PatientNameAdapter(private var data: List<PatientFullName>) :
+class PatientNameAdapter(private var data: List<PatientFullName>,
+                         private val onClickListener:OnPatientClickListener) :
     RecyclerView.Adapter<PatientNameAdapter.PatientNameViewHolder>() {
+    interface OnPatientClickListener {
+        fun onPatientClick(patientFullName: PatientFullName, position: Int)
+    }
 
     fun setData(patientNames:List<PatientFullName> ) {
         val result:DiffUtil.DiffResult  = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
@@ -39,21 +43,24 @@ class PatientNameAdapter(private var data: List<PatientFullName>) :
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientNameViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemPatientNameBinding.inflate(layoutInflater)
+        val binding = ItemPatientNameBinding.inflate(layoutInflater, parent, false)
         return PatientNameViewHolder(binding)
     }
 
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: PatientNameViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(data[position], position)
     }
 
-    class PatientNameViewHolder(private val binding: ItemPatientNameBinding) :
+    inner class PatientNameViewHolder(private val binding: ItemPatientNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(patientName: PatientFullName) {
+        fun bind(patientName: PatientFullName, position : Int) {
             binding.nameTextview.text =
-                "${patientName.surname} ${patientName.name} ${patientName.patronymic}"
+                "${patientName.surname} ${patientName.name} ${patientName.patronymic ?: ""}"
+            binding.root.setOnClickListener {
+                onClickListener.onPatientClick(patientName, position)
+            }
         }
     }
 }

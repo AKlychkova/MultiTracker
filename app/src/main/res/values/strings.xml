@@ -9,4 +9,11 @@
     <string name="best">Лучшее:</string>
     <string name="worst">Худшее:</string>
     <string name="mean">Среднее:</string>
+    <string name="statistics_hint">Выберите профиль справа</string>
+    <string name="age_info">Возраст: %1$d</string>
+    <string name="full_name_info">%1$s %2$s %3$s</string>
+    <string name="male">Пол: Мужской</string>
+    <string name="female">Пол: Женский</string>
+    <string name="hint_no_tests">Ещё нет пройденных тестирований</string>
+    <string name="diagnosis_info">Диагноз: %1$s</string>
 </resources>

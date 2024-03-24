@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.5.6")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     val lifecycle_version = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
@@ -64,7 +64,7 @@ dependencies {
     // Test helpers
     testImplementation("androidx.room:room-testing:$room_version")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

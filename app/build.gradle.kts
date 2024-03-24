@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.fragment:fragment-ktx:1.5.6")
 
     val lifecycle_version = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")

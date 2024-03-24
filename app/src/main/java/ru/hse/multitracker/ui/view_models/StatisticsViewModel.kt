@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.hse.multitracker.MultiTrackerApplication
-import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.database.entities.PatientWithTestSessions
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.data.repositories.PatientRepository
@@ -19,6 +18,16 @@ import ru.hse.multitracker.data.repositories.PatientRepository
 class StatisticsViewModel(private val repository: PatientRepository) : ViewModel() {
     val allPatientNames: LiveData<List<PatientFullName>> = repository.allPatients.asLiveData()
     val currentPatient = MutableLiveData<PatientWithTestSessions?>()
+
+    fun updateCurrentPatient() = viewModelScope.launch(Dispatchers.IO) {
+        val currentId = currentPatient.value?.patient?.id
+        if (currentId != null) {
+            val patient = repository.getWithTestSessions(currentId)
+            launch(Dispatchers.Main) {
+                currentPatient.value = patient
+            }
+        }
+    }
 
     fun onPatientClicked(patientFullName: PatientFullName) = viewModelScope.launch(Dispatchers.IO) {
         val patient = repository.getWithTestSessions(patientFullName.id)
@@ -33,10 +42,6 @@ class StatisticsViewModel(private val repository: PatientRepository) : ViewModel
             currentPatient.value = null
         }
     }
-
-//    fun insert(patient : Patient) = viewModelScope.launch {
-//        repository.insert(patient)
-//    }
 
     // Define ViewModel factory in a companion object
     companion object {

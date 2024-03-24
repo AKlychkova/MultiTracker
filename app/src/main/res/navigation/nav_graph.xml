@@ -29,8 +29,8 @@
             android:id="@+id/action_settingsFragment_to_instructionFragment"
             app:destination="@id/instructionFragment" />
         <action
-            android:id="@+id/action_settingsFragment_to_creationFormFragment"
-            app:destination="@id/creationFormFragment" />
+            android:id="@+id/action_settingsFragment_to_formFragment"
+            app:destination="@id/formFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -49,6 +49,12 @@
         <action
             android:id="@+id/action_formFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_formFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/testingFragment"
@@ -79,14 +85,5 @@
         <action
             android:id="@+id/action_instructionFragment_to_testingFragment"
             app:destination="@id/testingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/creationFormFragment"
-        android:name="ru.hse.multitracker.ui.elements.CreationFormFragment"
-        android:label="fragment_creation_form"
-        tools:layout="@layout/fragment_creation_form" >
-        <action
-            android:id="@+id/action_creationFormFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>

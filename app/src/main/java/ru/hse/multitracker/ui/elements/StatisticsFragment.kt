@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.hse.multitracker.R
-import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.FragmentStatisticsBinding
 import ru.hse.multitracker.ui.adapters.PatientNameAdapter
@@ -41,6 +40,7 @@ class StatisticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = patientNameAdapter
+        viewModel.updateCurrentPatient()
         observeViewModel()
         setListeners()
     }
@@ -49,12 +49,17 @@ class StatisticsFragment : Fragment() {
         binding.deleteButton.setOnClickListener {
             viewModel.onDeleteClicked()
         }
-        binding.updateButton.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                R.id.action_statisticsFragment_to_formFragment
-                // TODO send patient
-            )
-        )
+        binding.toUpdateFormButton.setOnClickListener { view ->
+            val bundle = Bundle()
+            val currentId = viewModel.currentPatient.value?.patient?.id
+            currentId?.let {
+                bundle.putLong("id", it)
+                view.findNavController().navigate(
+                    R.id.action_statisticsFragment_to_formFragment,
+                    bundle
+                )
+            }
+        }
     }
 
     private fun observeViewModel() {

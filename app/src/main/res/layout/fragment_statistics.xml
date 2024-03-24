@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="best_textview,update_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests" />
+        app:constraint_referenced_ids="best_textview,to_update_form_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -33,7 +33,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/update_button"
+        android:id="@+id/to_update_form_button"
         android:layout_width="197dp"
         android:layout_height="63dp"
         android:text="@string/update"
@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/update_button" />
+        app:layout_constraintTop_toBottomOf="@+id/to_update_form_button" />
 
     <TextView
         android:id="@+id/info_name_textview"
@@ -137,7 +137,7 @@
         android:textColor="@color/material_dynamic_neutral50"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/update_button"
+        app:layout_constraintBottom_toTopOf="@+id/to_update_form_button"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_worst_textview"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/accuracy_worst_textview"
@@ -246,7 +246,7 @@
         android:hint="@string/hint_no_tests"
         android:textSize="24sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/update_button"
+        app:layout_constraintBottom_toTopOf="@+id/to_update_form_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/info_diagnosis_textview" />

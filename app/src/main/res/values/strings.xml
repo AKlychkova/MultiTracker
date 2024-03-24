@@ -16,4 +16,16 @@
     <string name="female">Пол: Женский</string>
     <string name="hint_no_tests">Ещё нет пройденных тестирований</string>
     <string name="diagnosis_info">Диагноз: %1$s</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
+    <string name="age">Возраст</string>
+    <string name="male_radiobutton_text">Мужской</string>
+    <string name="female_radiobutton_text">Женский</string>
+    <string name="sex">Пол</string>
+    <string name="diagnosis">Диагноз</string>
+    <string name="empty_name_error">Имя обязательно должно быть заполненно</string>
+    <string name="empty_surname_error">Фамилия обязательно должна быть заполненна</string>
+    <string name="age_error">Возраст должн быть целым числом от 0 до 100</string>
+    <string name="save">Сохранить</string>
 </resources>

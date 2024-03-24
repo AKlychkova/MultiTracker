@@ -36,17 +36,17 @@ class FormFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.currentPatient.observe(viewLifecycleOwner) {
-            binding.nameEdittext.setText(it.name)
-            binding.surnameEdittext.setText(it.surname)
-            binding.patronymicEdittext.setText(it.patronymic)
-            binding.ageEdittext.setText(it.age.toString())
-            if (it.sex == true) {
+            binding.nameEdittext.setText(it?.name)
+            binding.surnameEdittext.setText(it?.surname)
+            binding.patronymicEdittext.setText(it?.patronymic)
+            binding.ageEdittext.setText(it?.age?.toString())
+            if (it?.sex == true) {
                 binding.maleRadiobutton.isChecked = true
             }
-            if (it.sex == false) {
+            if (it?.sex == false) {
                 binding.femaleRadiobutton.isChecked = true
             }
-            binding.diagnosisEdittext.setText(it.diagnosis)
+            binding.diagnosisEdittext.setText(it?.diagnosis)
         }
     }
 

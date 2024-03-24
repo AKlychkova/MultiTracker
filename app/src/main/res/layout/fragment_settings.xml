@@ -1,6 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.elements.SettingsFragment" />
+    tools:context=".ui.elements.SettingsFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:contentDescription="@string/add"
+        android:src="@drawable/baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView_settings" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/help_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/help"
+        android:src="@drawable/outline_question_mark_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/settings_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="total_seekbar,total_textview,target_textview,speed_textview,time_textview,target_seekbar,speed_seekbar,time_seekbar,ready_button,fullName_textview,total,target,speed,time" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_settings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/material_dynamic_neutral95"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.35" />
+
+    <TextView
+        android:id="@+id/hint_settings_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/statistics_hint"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView_settings"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/total_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:max="8"
+        android:progress="0"
+        android:progressTint="@color/design_default_color_primary_dark"
+        android:thumb="@drawable/baseline_circle_24"
+        android:thumbTint="@color/design_default_color_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/total_textview"
+        app:layout_constraintTop_toBottomOf="@+id/total_textview" />
+
+    <TextView
+        android:id="@+id/total_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/total_number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/target_textview"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView_settings"
+        app:layout_constraintTop_toBottomOf="@+id/fullName_textview" />
+
+    <TextView
+        android:id="@+id/target_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/target_number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/speed_textview"
+        app:layout_constraintStart_toStartOf="@+id/total_textview"
+        app:layout_constraintTop_toBottomOf="@+id/total_textview" />
+
+    <TextView
+        android:id="@+id/speed_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speed"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_textview"
+        app:layout_constraintStart_toStartOf="@+id/target_textview"
+        app:layout_constraintTop_toBottomOf="@+id/target_textview" />
+
+    <TextView
+        android:id="@+id/time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/movement_time"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/ready_button"
+        app:layout_constraintStart_toStartOf="@+id/speed_textview"
+        app:layout_constraintTop_toBottomOf="@+id/speed_textview" />
+
+    <SeekBar
+        android:id="@+id/target_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:max="4"
+        android:progress="0"
+        android:progressTint="@color/design_default_color_primary_dark"
+        android:thumb="@drawable/baseline_circle_24"
+        android:thumbTint="@color/design_default_color_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/target_textview"
+        app:layout_constraintTop_toBottomOf="@+id/target_textview" />
+
+    <SeekBar
+        android:id="@+id/speed_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:max="9"
+        android:progress="0"
+        android:progressTint="@color/design_default_color_primary_dark"
+        android:thumb="@drawable/baseline_circle_24"
+        android:thumbTint="@color/design_default_color_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/speed_textview"
+        app:layout_constraintTop_toBottomOf="@+id/speed_textview" />
+
+    <SeekBar
+        android:id="@+id/time_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:max="11"
+        android:progress="0"
+        android:progressTint="@color/design_default_color_primary_dark"
+        android:thumb="@drawable/baseline_circle_24"
+        android:thumbTint="@color/design_default_color_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/time_textview"
+        app:layout_constraintTop_toBottomOf="@+id/time_textview" />
+
+    <Button
+        android:id="@+id/ready_button"
+        android:layout_width="188dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/ready"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView_settings" />
+
+    <TextView
+        android:id="@+id/fullName_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView_settings"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Иванов Иван Иванович" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/total_textview"
+        app:layout_constraintStart_toEndOf="@+id/total_textview"
+        app:layout_constraintTop_toTopOf="@+id/total_textview"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/target_textview"
+        app:layout_constraintStart_toEndOf="@+id/target_textview"
+        app:layout_constraintTop_toTopOf="@+id/target_textview"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/speed_textview"
+        app:layout_constraintStart_toEndOf="@+id/speed_textview"
+        app:layout_constraintTop_toTopOf="@+id/speed_textview"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/time_textview"
+        app:layout_constraintStart_toEndOf="@+id/time_textview"
+        app:layout_constraintTop_toTopOf="@+id/time_textview"
+        tools:text="30 сек." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

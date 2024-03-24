@@ -28,4 +28,13 @@
     <string name="empty_surname_error">Фамилия обязательно должна быть заполненна</string>
     <string name="age_error">Возраст должн быть целым числом от 0 до 100</string>
     <string name="save">Сохранить</string>
+    <string name="total_number">Общее число объектов:</string>
+    <string name="target_number">Количество целей:</string>
+    <string name="speed">Скорость:</string>
+    <string name="movement_time">Время движения:</string>
+    <string name="ready">Готово</string>
+    <string name="help">Помощь</string>
+    <string name="add">Добавить</string>
+    <string name="number">%1$d</string>
+    <string name="time">%1$d сек.</string>
 </resources>

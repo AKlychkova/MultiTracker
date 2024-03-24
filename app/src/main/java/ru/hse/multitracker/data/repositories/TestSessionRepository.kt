@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 import ru.hse.multitracker.data.database.TestSessionDao
 import ru.hse.multitracker.data.database.entities.TestSession
 
-class TestSessionRepository (private val testSessionDao: TestSessionDao){
+class TestSessionRepository(private val testSessionDao: TestSessionDao) {
     @WorkerThread
     suspend fun insert(session: TestSession): Long {
         return testSessionDao.insertTestSession(session)
@@ -13,5 +13,10 @@ class TestSessionRepository (private val testSessionDao: TestSessionDao){
     @WorkerThread
     suspend fun getSession(id: Long): TestSession {
         return testSessionDao.getSession(id)
+    }
+
+    @WorkerThread
+    suspend fun getLastSession(patientId: Long): TestSession? {
+        return testSessionDao.getLastSession(patientId)
     }
 }

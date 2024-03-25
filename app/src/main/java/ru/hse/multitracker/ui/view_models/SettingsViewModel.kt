@@ -8,14 +8,12 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import ru.hse.multitracker.MultiTrackerApplication
 import ru.hse.multitracker.data.database.entities.TestSession
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.data.repositories.PatientRepository
 import ru.hse.multitracker.data.repositories.TestSessionRepository
-import java.util.Date
 
 class SettingsViewModel(
     private val pRepository: PatientRepository,

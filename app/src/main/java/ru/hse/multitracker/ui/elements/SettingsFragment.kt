@@ -9,11 +9,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.launch
 import ru.hse.multitracker.R
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.FragmentSettingsBinding

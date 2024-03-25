@@ -60,10 +60,15 @@ class FormFragment : Fragment() {
                 binding.surnameEdittext.error = getString(R.string.empty_surname_error)
                 return@setOnClickListener
             }
-            val age = binding.ageEdittext.text.toString().toIntOrNull()
-            if (age == null || age > 100 || age < 0) {
-                binding.ageEdittext.error = getString(R.string.age_error)
-                return@setOnClickListener
+            val age: Int?
+            if(binding.ageEdittext.text.isEmpty()) {
+                age = null
+            } else {
+                age = binding.ageEdittext.text.toString().toIntOrNull()
+                if (age == null || age > 100 || age < 0) {
+                    binding.ageEdittext.error = getString(R.string.age_error)
+                    return@setOnClickListener
+                }
             }
             viewModel.save(
                 name = binding.nameEdittext.text.toString(),

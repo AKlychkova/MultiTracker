@@ -65,8 +65,17 @@
             android:id="@+id/action_testingFragment_to_reportFragment"
             app:destination="@id/reportFragment" />
         <argument
-            android:name="id"
-            app:argType="long" />
+            android:name="total"
+            app:argType="integer" />
+        <argument
+            android:name="target"
+            app:argType="integer" />
+        <argument
+            android:name="speed"
+            app:argType="integer" />
+        <argument
+            android:name="time"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"

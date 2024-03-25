@@ -115,6 +115,7 @@ class SettingsFragment : Fragment() {
                 R.string.time
             )
         )
+
         binding.addFab.setOnClickListener { view ->
             val bundle = Bundle()
             bundle.putLong("id", 0)
@@ -123,27 +124,23 @@ class SettingsFragment : Fragment() {
                 bundle
             )
         }
+
         binding.helpFab.setOnClickListener(
             Navigation.createNavigateOnClickListener(
                 R.id.action_settingsFragment_to_instructionFragment
             )
         )
+
         binding.readyButton.setOnClickListener { view ->
-            val result = viewModel.onReadyButtonClicked(
-                totalAmount = TOTAL_MIN + binding.totalSeekbar.progress * TOTAL_STEP,
-                targetAmount = TARGET_MIN + binding.targetSeekbar.progress * TARGET_STEP,
-                speed = SPEED_MIN + binding.speedSeekbar.progress * SPEED_STEP,
-                time = TIME_MIN + binding.timeSeekbar.progress * TIME_STEP
+            val bundle = Bundle()
+            bundle.putInt("total", TOTAL_MIN + binding.totalSeekbar.progress * TOTAL_STEP)
+            bundle.putInt("target", TARGET_MIN + binding.targetSeekbar.progress * TARGET_STEP)
+            bundle.putInt("speed", SPEED_MIN + binding.speedSeekbar.progress * SPEED_STEP)
+            bundle.putInt("time", TIME_MIN + binding.timeSeekbar.progress * TIME_STEP)
+            view.findNavController().navigate(
+                R.id.action_settingsFragment_to_testingFragment,
+                bundle
             )
-            lifecycleScope.launch {
-                val id = result.await()
-                val bundle = Bundle()
-                bundle.putLong("id", id)
-                view.findNavController().navigate(
-                    R.id.action_settingsFragment_to_testingFragment,
-                    bundle
-                )
-            }
         }
     }
 

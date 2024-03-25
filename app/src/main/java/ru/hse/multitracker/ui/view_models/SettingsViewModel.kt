@@ -34,23 +34,6 @@ class SettingsViewModel(
         }
     }
 
-    fun onReadyButtonClicked(totalAmount: Int, targetAmount: Int, speed: Int, time: Int) =
-        viewModelScope.async(Dispatchers.IO) {
-            tRepository.insert(
-                TestSession(
-                    id = 0,
-                    date = Date(),
-                    totalAmount = totalAmount,
-                    targetAmount = targetAmount,
-                    speed = speed,
-                    movementTime = time,
-                    accuracy = 0.0,
-                    reactionTime = 0,
-                    patientId = currentPatientId!!
-                )
-            )
-        }
-
     companion object {
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

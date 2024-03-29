@@ -78,6 +78,12 @@ class SettingsFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.hintSettingsTextview.visibility = View.VISIBLE
+        binding.settingsGroup.visibility = View.INVISIBLE
+    }
+
     private fun setListeners() {
         binding.totalSeekbar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

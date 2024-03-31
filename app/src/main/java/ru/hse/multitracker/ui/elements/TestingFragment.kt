@@ -210,6 +210,7 @@ class TestingFragment : Fragment() {
     private fun finishAttempt(view: View) {
         objects.forEach { it.isClickable = false }
         binding.chronometer.stop()
+        sumReactionTime += ((SystemClock.elapsedRealtime() - binding.chronometer.base) / 1000).toInt()
         currentAnimators.clear()
         attemptCount += 1
         if (attemptCount >= totalAttemptCount) {

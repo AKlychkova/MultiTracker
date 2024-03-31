@@ -45,4 +45,7 @@
     <string name="all_statistics">Вся статистика</string>
     <string name="percent">%1$d%%</string>
     <string name="no_users">Учетных записей пока нет</string>
+    <string name="delete_alert_message">Удалить учетную запись?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

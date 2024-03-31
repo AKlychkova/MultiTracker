@@ -1,5 +1,6 @@
 package ru.hse.multitracker.ui.elements
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -55,8 +56,9 @@ class StatisticsFragment : Fragment() {
 
     private fun setListeners() {
         binding.deleteButton.setOnClickListener {
-            viewModel.onDeleteClicked()
+            showDeleteAlertDialog()
         }
+
         binding.toUpdateFormButton.setOnClickListener { view ->
             val bundle = Bundle()
             val currentId = viewModel.currentPatient.value?.patient?.id
@@ -68,6 +70,14 @@ class StatisticsFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun showDeleteAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(getString(R.string.delete_alert_message))
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> viewModel.onDeleteClicked() }
+            .setNegativeButton(getString(R.string.no)) { _, _ -> }
+            .show()
     }
 
     private fun observeViewModel() {

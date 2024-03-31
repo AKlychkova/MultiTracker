@@ -169,6 +169,11 @@ class SettingsFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.allPatientNames.observe(viewLifecycleOwner) {
+            binding.hintNoUsersSettingsTextview.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
             it.let { patientNameAdapter.setData(it) }
         }
 

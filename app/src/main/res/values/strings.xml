@@ -9,7 +9,7 @@
     <string name="best">Лучшее:</string>
     <string name="worst">Худшее:</string>
     <string name="mean">Среднее:</string>
-    <string name="statistics_hint">Выберите профиль слева</string>
+    <string name="statistics_hint">Выберите учетную запись слева</string>
     <string name="age_info">Возраст: %1$d</string>
     <string name="full_name_info">%1$s %2$s %3$s</string>
     <string name="male">Пол: Мужской</string>
@@ -44,4 +44,5 @@
     <string name="to_home_screen">На главный экран</string>
     <string name="all_statistics">Вся статистика</string>
     <string name="percent">%1$d%%</string>
+    <string name="no_users">Учетных записей пока нет</string>
 </resources>

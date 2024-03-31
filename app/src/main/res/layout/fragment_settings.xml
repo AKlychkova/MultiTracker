@@ -62,6 +62,19 @@
         app:layout_constraintStart_toEndOf="@+id/recyclerView_settings"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/hint_no_users_settings_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:hint="@string/no_users"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerView_settings"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView_settings"
+        app:layout_constraintStart_toStartOf="@+id/recyclerView_settings"
+        app:layout_constraintTop_toTopOf="@+id/recyclerView_settings" />
+
     <SeekBar
         android:id="@+id/total_seekbar"
         android:layout_width="0dp"

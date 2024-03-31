@@ -11,10 +11,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.hse.multitracker.R
+import ru.hse.multitracker.data.database.entities.TestSession
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.FragmentStatisticsBinding
 import ru.hse.multitracker.ui.adapters.PatientNameAdapter
 import ru.hse.multitracker.ui.view_models.StatisticsViewModel
+import kotlin.math.roundToInt
 
 class StatisticsFragment : Fragment() {
 
@@ -70,6 +72,11 @@ class StatisticsFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.allPatientNames.observe(viewLifecycleOwner) {
+            binding.hintNoUsersTextview.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
             it.let { patientNameAdapter.setData(it) }
         }
 
@@ -111,7 +118,7 @@ class StatisticsFragment : Fragment() {
                 } else {
                     binding.testInfo.visibility = View.VISIBLE
                     binding.hintNoTests.visibility = View.INVISIBLE
-                    // TODO observe test statistics
+                    calculateResults(it.sessions)
                 }
             }
         }

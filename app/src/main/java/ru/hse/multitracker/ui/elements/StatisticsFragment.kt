@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.hse.multitracker.R
 import ru.hse.multitracker.data.repositories.PatientFullName
@@ -33,6 +35,10 @@ class StatisticsFragment : Fragment() {
             }
         }
         patientNameAdapter = PatientNameAdapter(listOf(), patientClickListener)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_statisticsFragment_to_homeFragment)
+        }
+        callback.isEnabled = true
         return binding.root
     }
 

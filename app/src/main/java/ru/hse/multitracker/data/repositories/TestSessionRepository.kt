@@ -19,4 +19,14 @@ class TestSessionRepository(private val testSessionDao: TestSessionDao) {
     suspend fun getLastSession(patientId: Long): TestSession? {
         return testSessionDao.getLastSession(patientId)
     }
+
+    @WorkerThread
+    suspend fun delete(session: TestSession) {
+        testSessionDao.deleteTestSession(session)
+    }
+
+    @WorkerThread
+    suspend fun update(session: TestSession) {
+        testSessionDao.updateTestSession(session)
+    }
 }

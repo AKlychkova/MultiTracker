@@ -22,7 +22,7 @@ data class TestSession(
     @ColumnInfo(name = "total_amount") val totalAmount: Int,
     @ColumnInfo(name = "speed") val speed: Int,
     @ColumnInfo(name = "movement_time") val movementTime: Int,
-    @ColumnInfo(name = "accuracy") val accuracy: Double,
-    @ColumnInfo(name = "reaction_time") val reactionTime: Int,
+    @ColumnInfo(name = "accuracy") var accuracy: Double,
+    @ColumnInfo(name = "reaction_time") var reactionTime: Int,
     @ColumnInfo(name = "patient_id") val patientId: Long
 )

@@ -9,7 +9,7 @@
     <string name="best">Лучшее:</string>
     <string name="worst">Худшее:</string>
     <string name="mean">Среднее:</string>
-    <string name="statistics_hint">Выберите профиль справа</string>
+    <string name="statistics_hint">Выберите профиль слева</string>
     <string name="age_info">Возраст: %1$d</string>
     <string name="full_name_info">%1$s %2$s %3$s</string>
     <string name="male">Пол: Мужской</string>
@@ -24,8 +24,8 @@
     <string name="female_radiobutton_text">Женский</string>
     <string name="sex">Пол</string>
     <string name="diagnosis">Диагноз</string>
-    <string name="empty_name_error">Имя обязательно должно быть заполненно</string>
-    <string name="empty_surname_error">Фамилия обязательно должна быть заполненна</string>
+    <string name="empty_name_error">Имя обязательно должно быть заполнено</string>
+    <string name="empty_surname_error">Фамилия обязательно должна быть заполнена</string>
     <string name="age_error">Возраст должн быть целым числом от 0 до 100</string>
     <string name="save">Сохранить</string>
     <string name="total_number">Общее число объектов:</string>
@@ -37,4 +37,8 @@
     <string name="add">Добавить</string>
     <string name="number">%1$d</string>
     <string name="time">%1$d сек.</string>
+    <string name="object">Объект</string>
+    <string name="go">Поехали!</string>
+    <string name="one">1</string>
+    <string name="one_second">1 сек.</string>
 </resources>

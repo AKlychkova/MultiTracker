@@ -76,6 +76,9 @@
         <argument
             android:name="time"
             app:argType="integer" />
+        <argument
+            android:name="p_id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
@@ -88,6 +91,15 @@
         <action
             android:id="@+id/action_reportFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <argument
+            android:name="s_id"
+            app:argType="long" />
+        <argument
+            android:name="time"
+            app:argType="integer" />
+        <argument
+            android:name="accuracy"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/instructionFragment"

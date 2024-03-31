@@ -137,6 +137,7 @@ class SettingsFragment : Fragment() {
 
         binding.readyButton.setOnClickListener { view ->
             val bundle = Bundle()
+            bundle.putLong("p_id", viewModel.currentPatientId!!)
             bundle.putInt("total", TOTAL_MIN + binding.totalSeekbar.progress * TOTAL_STEP)
             bundle.putInt("target", TARGET_MIN + binding.targetSeekbar.progress * TARGET_STEP)
             bundle.putInt("speed", SPEED_MIN + binding.speedSeekbar.progress * SPEED_STEP)
@@ -180,10 +181,10 @@ class SettingsFragment : Fragment() {
                 binding.speedSeekbar.progress = (SPEED_DEFAULT - SPEED_MIN) / SPEED_STEP
                 binding.timeSeekbar.progress = (TIME_DEFAULT - TIME_MIN) / TIME_STEP
             } else {
-                binding.totalSeekbar.progress = it.totalAmount
-                binding.targetSeekbar.progress = it.targetAmount
-                binding.speedSeekbar.progress = it.speed
-                binding.timeSeekbar.progress = it.movementTime
+                binding.totalSeekbar.progress = (it.totalAmount - TOTAL_MIN) / TOTAL_STEP
+                binding.targetSeekbar.progress = (it.targetAmount - TARGET_MIN) / TARGET_STEP
+                binding.speedSeekbar.progress = (it.speed- SPEED_MIN) / SPEED_STEP
+                binding.timeSeekbar.progress = (it.movementTime - TIME_MIN) / TIME_STEP
             }
         }
     }

@@ -117,6 +117,23 @@ class StatisticsFragment : Fragment() {
         }
     }
 
+    private fun calculateResults(sessions: List<TestSession>) {
+        val bestAccuracy = (sessions.maxOf { it.accuracy } * 100).roundToInt()
+        val worstAccuracy = (sessions.minOf { it.accuracy } * 100).roundToInt()
+        val meanAccuracy = (sessions.sumOf { it.accuracy } / sessions.size * 100).roundToInt()
+        val bestReactionTime = sessions.minOf { it.reactionTime }
+        val worstReactionTime = sessions.maxOf { it.reactionTime }
+        val meanReactionTime =
+            (sessions.sumOf { it.reactionTime }.toDouble() / sessions.size).roundToInt()
+
+        binding.accuracyBestTextview.text = getString(R.string.percent, bestAccuracy)
+        binding.accuracyWorstTextview.text = getString(R.string.percent, worstAccuracy)
+        binding.accuracyMeanTextview.text = getString(R.string.percent, meanAccuracy)
+        binding.reactionBestTextview.text = getString(R.string.time, bestReactionTime)
+        binding.reactionWorstTextview.text = getString(R.string.time, worstReactionTime)
+        binding.reactionMeanTextview.text = getString(R.string.time, meanReactionTime)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

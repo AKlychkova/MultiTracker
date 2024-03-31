@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/icon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.elements.ReportFragment" />
+    tools:context=".ui.elements.ReportFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/accuracy"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/report_accuracy_textview"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/reaction_time"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/report_reaction_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/report_accuracy_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="96sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/home_button"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="48%" />
+
+    <TextView
+        android:id="@+id/report_reaction_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="96sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/report_accuracy_textview"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/report_accuracy_textview"
+        tools:text="50 сек." />
+
+    <Button
+        android:id="@+id/statistics_button_2"
+        android:layout_width="396dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/all_statistics"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/home_button"
+        app:layout_constraintEnd_toStartOf="@+id/home_button"
+        app:layout_constraintTop_toTopOf="@+id/home_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/home_button"
+        android:layout_width="125dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="@string/to_home_screen"
+        android:textSize="34sp"
+        app:icon="@drawable/baseline_home_24"
+        app:iconGravity="textStart"
+        app:iconSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

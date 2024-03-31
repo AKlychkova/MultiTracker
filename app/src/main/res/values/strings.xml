@@ -40,5 +40,8 @@
     <string name="object">Объект</string>
     <string name="go">Поехали!</string>
     <string name="one">1</string>
-    <string name="one_second">1 сек.</string>
+    <string name="five_second">5 сек.</string>
+    <string name="to_home_screen">На главный экран</string>
+    <string name="all_statistics">Вся статистика</string>
+    <string name="percent">%1$d%%</string>
 </resources>

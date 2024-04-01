@@ -57,11 +57,18 @@ class TestingFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        createSession()
-        setListeners()
-        observeViewModel()
+    override fun onResume() {
+        super.onResume()
+        binding.field.postDelayed({
+            println("border: " + binding.field.right)
+            rightBorder =
+                binding.field.right - resources.getDimensionPixelSize(R.dimen.object_size)
+            bottomBorder =
+                binding.field.bottom - resources.getDimensionPixelSize(R.dimen.object_size)
+            observeViewModel()
+            createSession()
+            setListeners()
+        }, 300)
     }
 
     private fun setListeners() {
@@ -166,9 +173,6 @@ class TestingFragment : Fragment() {
         val target = viewModel.currentSession.value!!.targetAmount
         objectsClicked = 0
         binding.chronometer.visibility = View.GONE
-        rightBorder = binding.field.right - resources.getDimensionPixelSize(R.dimen.object_size)
-        bottomBorder =
-            binding.field.bottom - resources.getDimensionPixelSize(R.dimen.object_size)
         for (i in 0..<total) {
             objects.add(createButton())
             if (i < target) {

@@ -6,4 +6,6 @@
     <color name="yellow">#FFCA18</color>
     <color name="red">#DA6027</color>
     <color name="green">#48B6A2</color>
+    <color name="red_semitransparent">#80DA6027</color>
+    <color name="green_semitransparent">#8048B6A2</color>
 </resources>

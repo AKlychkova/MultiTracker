@@ -10,14 +10,15 @@
         android:id="@+id/test_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="best_textview,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,reaction_textview,accuracy_textview,worst_textview,mean_textview" />
+        app:constraint_referenced_ids="best_textview,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,reaction_textview,accuracy_textview,worst_textview,mean_textview,graphview" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/statistics_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="best_textview,to_update_form_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests" />
+        app:constraint_referenced_ids="best_textview,to_update_form_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests,graphview"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -38,21 +39,23 @@
         android:layout_height="63dp"
         android:text="@string/update"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/delete_button"
+        app:layout_constraintBottom_toBottomOf="@+id/delete_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/accuracy_mean_textview" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/delete_button"
+        app:layout_constraintTop_toTopOf="@+id/delete_button" />
 
     <Button
         android:id="@+id/delete_button"
         android:layout_width="197dp"
         android:layout_height="63dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/delete"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/to_update_form_button" />
+        app:layout_constraintEnd_toStartOf="@+id/to_update_form_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView" />
 
     <TextView
         android:id="@+id/info_name_textview"
@@ -60,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/info_name_textview"
         app:layout_constraintTop_toBottomOf="@+id/info_name_textview"
         tools:text="15 лет" />
@@ -80,7 +83,7 @@
         android:id="@+id/info_sex_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/info_name_textview"
         app:layout_constraintTop_toBottomOf="@+id/info_age_textview"
         tools:text="Мужской" />
@@ -89,7 +92,7 @@
         android:id="@+id/info_diagnosis_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/info_name_textview"
         app:layout_constraintTop_toBottomOf="@+id/info_sex_textview"
         tools:text="Норма" />
@@ -133,8 +136,9 @@
         android:id="@+id/accuracy_worst_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/accuracy_mean_textview"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_best_textview"
@@ -147,10 +151,10 @@
         android:id="@+id/accuracy_mean_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@color/material_dynamic_neutral50"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/to_update_form_button"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_worst_textview"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/accuracy_worst_textview"
@@ -162,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/material_dynamic_neutral50"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/accuracy_mean_textview"
         app:layout_constraintEnd_toEndOf="@+id/reaction_worst_textview"
@@ -174,8 +178,9 @@
         android:id="@+id/accuracy_best_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@android:color/holo_green_light"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/accuracy_worst_textview"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_textview"
@@ -189,7 +194,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/accuracy_worst_textview"
         app:layout_constraintEnd_toEndOf="@+id/reaction_best_textview"
@@ -202,7 +207,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_green_light"
-        android:textSize="48sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/accuracy_best_textview"
         app:layout_constraintEnd_toEndOf="@+id/reaction_textview"
@@ -215,7 +220,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reaction_time"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/accuracy_textview"
@@ -225,8 +230,9 @@
         android:id="@+id/accuracy_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/accuracy"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/reaction_textview"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/best_textview"
@@ -263,5 +269,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/info_diagnosis_textview" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graphview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/accuracy_mean_textview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

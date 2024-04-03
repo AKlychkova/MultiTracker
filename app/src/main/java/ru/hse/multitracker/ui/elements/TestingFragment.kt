@@ -8,6 +8,7 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -57,18 +58,23 @@ class TestingFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.field.postDelayed({
-            println("border: " + binding.field.right)
-            rightBorder =
-                binding.field.right - resources.getDimensionPixelSize(R.dimen.object_size)
-            bottomBorder =
-                binding.field.bottom - resources.getDimensionPixelSize(R.dimen.object_size)
-            observeViewModel()
-            createSession()
-            setListeners()
-        }, 300)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewTreeObserver = binding.field.viewTreeObserver
+        if (viewTreeObserver.isAlive) {
+            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    binding.field.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    rightBorder =
+                        binding.field.right - resources.getDimensionPixelSize(R.dimen.object_size)
+                    bottomBorder =
+                        binding.field.bottom - resources.getDimensionPixelSize(R.dimen.object_size)
+                    observeViewModel()
+                    setListeners()
+                }
+            })
+        }
+        createSession()
     }
 
     private fun setListeners() {

@@ -1,5 +1,6 @@
 package ru.hse.multitracker.ui.view_models
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,12 +13,13 @@ import ru.hse.multitracker.data.database.entities.TestSession
 import ru.hse.multitracker.data.repositories.TestSessionRepository
 
 class ReportViewModel(private val repository: TestSessionRepository) : ViewModel() {
-    val currentSession = MutableLiveData<TestSession>()
+    private val _currentSession = MutableLiveData<TestSession>()
+    val currentSession: LiveData<TestSession> get() = _currentSession
 
     fun getSession(id:Long) = viewModelScope.launch(Dispatchers.IO) {
         val session = repository.getSession(id)
         launch(Dispatchers.Main) {
-            currentSession.value = session
+            _currentSession.value = session
         }
     }
 

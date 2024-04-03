@@ -1,5 +1,6 @@
 package ru.hse.multitracker.ui.view_models
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,8 @@ import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.repositories.PatientRepository
 
 class FormViewModel(private val repository: PatientRepository) : ViewModel() {
-    val currentPatient = MutableLiveData<Patient?>()
+    private val _currentPatient = MutableLiveData<Patient?>()
+    val currentPatient: LiveData<Patient?> get() = _currentPatient
     fun save(
         name: String,
         surname: String,
@@ -53,7 +55,7 @@ class FormViewModel(private val repository: PatientRepository) : ViewModel() {
             repository.getPatient(id)
         }
         launch(Dispatchers.Main) {
-            currentPatient.value = patient
+            _currentPatient.value = patient
         }
     }
 

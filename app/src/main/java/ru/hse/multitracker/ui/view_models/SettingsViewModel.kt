@@ -21,14 +21,15 @@ class SettingsViewModel(
 ) : ViewModel() {
 
     val allPatientNames: LiveData<List<PatientFullName>> = pRepository.allPatients.asLiveData()
-    val lastSession = MutableLiveData<TestSession?>()
+    private val _lastSession = MutableLiveData<TestSession?>()
+    val lastSession: LiveData<TestSession?> get() = _lastSession
     var currentPatientId: Long? = null
     private set
 
     fun onPatientClicked(patientFullName: PatientFullName) = viewModelScope.launch(Dispatchers.IO) {
         val session = tRepository.getLastSession(patientFullName.id)
         launch(Dispatchers.Main) {
-            lastSession.value = session
+            _lastSession.value = session
             currentPatientId = patientFullName.id
         }
     }

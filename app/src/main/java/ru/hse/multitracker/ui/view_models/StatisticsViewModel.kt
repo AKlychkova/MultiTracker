@@ -17,14 +17,15 @@ import ru.hse.multitracker.data.repositories.PatientRepository
 
 class StatisticsViewModel(private val repository: PatientRepository) : ViewModel() {
     val allPatientNames: LiveData<List<PatientFullName>> = repository.allPatients.asLiveData()
-    val currentPatient = MutableLiveData<PatientWithTestSessions?>()
+    private val _currentPatient = MutableLiveData<PatientWithTestSessions?>()
+    val currentPatient: LiveData<PatientWithTestSessions?> get() = _currentPatient
 
     fun updateCurrentPatient() = viewModelScope.launch(Dispatchers.IO) {
         val currentId = currentPatient.value?.patient?.id
         if (currentId != null) {
             val patient = repository.getWithTestSessions(currentId)
             launch(Dispatchers.Main) {
-                currentPatient.value = patient
+                _currentPatient.value = patient
             }
         }
     }
@@ -32,14 +33,14 @@ class StatisticsViewModel(private val repository: PatientRepository) : ViewModel
     fun onPatientClicked(patientFullName: PatientFullName) = viewModelScope.launch(Dispatchers.IO) {
         val patient = repository.getWithTestSessions(patientFullName.id)
         launch(Dispatchers.Main) {
-            currentPatient.value = patient
+            _currentPatient.value = patient
         }
     }
 
     fun onDeleteClicked() = viewModelScope.launch(Dispatchers.IO) {
         currentPatient.value?.let { repository.delete(it.patient) }
         launch(Dispatchers.Main) {
-            currentPatient.value = null
+            _currentPatient.value = null
         }
     }
 

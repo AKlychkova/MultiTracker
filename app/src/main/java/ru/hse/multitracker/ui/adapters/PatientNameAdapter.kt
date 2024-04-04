@@ -9,11 +9,8 @@ import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.ItemPatientNameBinding
 
 class PatientNameAdapter(private var data: List<PatientFullName>,
-                         private val onClickListener:OnPatientClickListener) :
+                         private val onPatientClick: (PatientFullName) -> Unit) :
     RecyclerView.Adapter<PatientNameAdapter.PatientNameViewHolder>() {
-    interface OnPatientClickListener {
-        fun onPatientClick(patientFullName: PatientFullName, position: Int)
-    }
 
     fun setData(patientNames:List<PatientFullName> ) {
         val result:DiffUtil.DiffResult  = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
@@ -52,7 +49,7 @@ class PatientNameAdapter(private var data: List<PatientFullName>,
     override fun onBindViewHolder(holder: PatientNameViewHolder, position: Int) {
         holder.bind(data[position])
         holder.itemView.setOnClickListener {
-            onClickListener.onPatientClick(data[position], position)
+            onPatientClick(data[position])
         }
     }
 

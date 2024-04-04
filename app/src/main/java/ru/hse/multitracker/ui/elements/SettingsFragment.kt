@@ -13,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.hse.multitracker.R
-import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.FragmentSettingsBinding
 import ru.hse.multitracker.ui.adapters.PatientNameAdapter
 import ru.hse.multitracker.ui.view_models.SettingsViewModel
@@ -51,18 +50,15 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        val patientClickListener = object : PatientNameAdapter.OnPatientClickListener {
-            override fun onPatientClick(patientFullName: PatientFullName, position: Int) {
-                binding.fullNameTextview.text = getString(
-                    R.string.full_name_info,
-                    patientFullName.surname,
-                    patientFullName.name,
-                    patientFullName.patronymic ?: ""
-                )
-                viewModel.onPatientClicked(patientFullName)
-            }
+        patientNameAdapter = PatientNameAdapter(listOf()) { fullName ->
+            binding.fullNameTextview.text = getString(
+                R.string.full_name_info,
+                fullName.surname,
+                fullName.name,
+                fullName.patronymic ?: ""
+            )
+            viewModel.onPatientClicked(fullName)
         }
-        patientNameAdapter = PatientNameAdapter(listOf(), patientClickListener)
         return binding.root
     }
 

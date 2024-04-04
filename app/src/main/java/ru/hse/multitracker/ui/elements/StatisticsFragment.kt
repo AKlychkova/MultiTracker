@@ -18,7 +18,6 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import ru.hse.multitracker.R
 import ru.hse.multitracker.data.database.entities.TestSession
-import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.FragmentStatisticsBinding
 import ru.hse.multitracker.ui.adapters.PatientNameAdapter
 import ru.hse.multitracker.ui.view_models.StatisticsViewModel
@@ -38,12 +37,9 @@ class StatisticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStatisticsBinding.inflate(inflater, container, false)
-        val patientClickListener = object : PatientNameAdapter.OnPatientClickListener {
-            override fun onPatientClick(patientFullName: PatientFullName, position: Int) {
-                viewModel.onPatientClicked(patientFullName)
-            }
+        patientNameAdapter = PatientNameAdapter(listOf()) { fullName ->
+            viewModel.onPatientClicked(fullName)
         }
-        patientNameAdapter = PatientNameAdapter(listOf(), patientClickListener)
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_statisticsFragment_to_homeFragment)
         }

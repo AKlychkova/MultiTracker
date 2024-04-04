@@ -38,7 +38,7 @@ class PatientNameAdapter(private var data: List<PatientFullName>,
                         TextUtils.equals(oldName.patronymic,newName.patronymic)
             }
         })
-        data = patientNames;
+        data = patientNames
         result.dispatchUpdatesTo(this)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientNameViewHolder {
@@ -50,17 +50,17 @@ class PatientNameAdapter(private var data: List<PatientFullName>,
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: PatientNameViewHolder, position: Int) {
-        holder.bind(data[position], position)
+        holder.bind(data[position])
+        holder.itemView.setOnClickListener {
+            onClickListener.onPatientClick(data[position], position)
+        }
     }
 
     inner class PatientNameViewHolder(private val binding: ItemPatientNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(patientName: PatientFullName, position : Int) {
+        fun bind(patientName: PatientFullName) {
             binding.nameTextview.text =
                 "${patientName.surname} ${patientName.name} ${patientName.patronymic ?: ""}"
-            binding.root.setOnClickListener {
-                onClickListener.onPatientClick(patientName, position)
-            }
         }
     }
 }

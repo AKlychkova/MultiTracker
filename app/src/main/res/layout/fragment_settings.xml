@@ -48,7 +48,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.35" />
+        app:layout_constraintWidth_percent="0.35"
+        tools:itemCount="20"
+        tools:listitem="@layout/item_patient_name"/>
 
     <TextView
         android:id="@+id/hint_settings_textview"

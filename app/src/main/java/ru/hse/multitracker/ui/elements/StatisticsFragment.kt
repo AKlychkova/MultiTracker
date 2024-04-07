@@ -6,16 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jjoe64.graphview.DefaultLabelFormatter
-import com.jjoe64.graphview.LegendRenderer
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import ru.hse.multitracker.R
 import ru.hse.multitracker.data.database.entities.TestSession
 import ru.hse.multitracker.databinding.FragmentStatisticsBinding
@@ -25,10 +20,10 @@ import kotlin.math.roundToInt
 
 
 class StatisticsFragment : Fragment() {
-
     private val viewModel: StatisticsViewModel by viewModels { StatisticsViewModel.Factory }
     private var _binding: FragmentStatisticsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var graph: ResultsGraph
     private lateinit var patientNameAdapter: PatientNameAdapter
 
     override fun onCreateView(
@@ -51,6 +46,7 @@ class StatisticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = patientNameAdapter
+        graph = ResultsGraph(binding.graphview, requireContext())
         viewModel.updateCurrentPatient()
         observeViewModel()
         setListeners()
@@ -92,8 +88,8 @@ class StatisticsFragment : Fragment() {
             it.let { patientNameAdapter.setData(it) }
         }
 
-        viewModel.currentPatient.observe(viewLifecycleOwner) {
-            if (it == null) {
+        viewModel.currentPatient.observe(viewLifecycleOwner) { patientWithTestSessions ->
+            if (patientWithTestSessions == null) {
                 binding.hintTextview.visibility = View.VISIBLE
                 binding.statisticsGroup.visibility = View.INVISIBLE
             } else {
@@ -101,119 +97,48 @@ class StatisticsFragment : Fragment() {
                 binding.statisticsGroup.visibility = View.VISIBLE
                 binding.infoNameTextview.text = getString(
                     R.string.full_name_info,
-                    it.patient.surname,
-                    it.patient.name,
-                    it.patient.patronymic ?: ""
+                    patientWithTestSessions.patient.surname,
+                    patientWithTestSessions.patient.name,
+                    patientWithTestSessions.patient.patronymic ?: ""
                 )
-                if (it.patient.age == null) {
+                if (patientWithTestSessions.patient.age == null) {
                     binding.infoAgeTextview.visibility = View.GONE
                 } else {
-                    binding.infoAgeTextview.text = getString(R.string.age_info, it.patient.age)
+                    binding.infoAgeTextview.text =
+                        getString(R.string.age_info, patientWithTestSessions.patient.age)
                 }
-                if (it.patient.diagnosis == null) {
+                if (patientWithTestSessions.patient.diagnosis == null) {
                     binding.infoDiagnosisTextview.visibility = View.GONE
                 } else {
                     binding.infoDiagnosisTextview.text = getString(
                         R.string.diagnosis_info,
-                        it.patient.diagnosis
+                        patientWithTestSessions.patient.diagnosis
                     )
                 }
-                if (it.patient.sex == null) {
+                if (patientWithTestSessions.patient.sex == null) {
                     binding.infoSexTextview.visibility = View.GONE
                 } else {
-                    binding.infoSexTextview.text =
-                        getString(if (it.patient.sex == false) R.string.female else R.string.male)
+                    binding.infoSexTextview.text = getString(
+                        if (patientWithTestSessions.patient.sex == false) {
+                            R.string.female
+                        } else {
+                            R.string.male
+                        }
+                    )
                 }
-                if (it.sessions.isEmpty()) {
+                if (patientWithTestSessions.sessions.isEmpty()) {
                     binding.testInfo.visibility = View.INVISIBLE
                     binding.hintNoTests.visibility = View.VISIBLE
                 } else {
                     binding.testInfo.visibility = View.VISIBLE
                     binding.hintNoTests.visibility = View.INVISIBLE
-                    calculateResults(it.sessions)
-                    showGraphs(it.sessions)
+                    calculateResults(patientWithTestSessions.sessions)
+                    graph.updateData(
+                        patientWithTestSessions.sessions.sortedBy { session -> session.date }
+                    )
                 }
             }
         }
-    }
-
-    private fun showGraphs(sessions: List<TestSession>) {
-        binding.graphview.removeAllSeries()
-        binding.graphview.secondScale.removeAllSeries()
-
-        val sortedSessions = sessions.sortedBy { it.date }
-
-        val accuracySeries = LineGraphSeries(
-            sortedSessions.map { session -> DataPoint(session.date, session.accuracy * 100) }
-                .toTypedArray()
-        )
-        accuracySeries.color = ContextCompat.getColor(requireContext(), R.color.green)
-        accuracySeries.title = getString(R.string.accuracy)
-        accuracySeries.isDrawDataPoints = true
-        accuracySeries.isDrawBackground = true
-        accuracySeries.backgroundColor =
-            ContextCompat.getColor(requireContext(), R.color.green_semitransparent)
-        binding.graphview.addSeries(accuracySeries)
-
-        val reactionSeries = LineGraphSeries(
-            sortedSessions.map { session ->
-                DataPoint(
-                    session.date,
-                    session.reactionTime.toDouble()
-                )
-            }
-                .toTypedArray()
-        )
-        reactionSeries.color = ContextCompat.getColor(requireContext(), R.color.red)
-        reactionSeries.title = getString(R.string.reaction_time)
-        reactionSeries.isDrawDataPoints = true
-        reactionSeries.isDrawBackground = true
-        reactionSeries.backgroundColor =
-            ContextCompat.getColor(requireContext(), R.color.red_semitransparent)
-        binding.graphview.getSecondScale().addSeries(reactionSeries)
-
-        // set label formatter
-        binding.graphview.gridLabelRenderer.setLabelFormatter(object : DefaultLabelFormatter() {
-            override fun formatLabel(value: Double, isValueX: Boolean): String {
-                return if (isValueX) {
-                    // show dates for x values
-                    val dateFormat = android.text.format.DateFormat.getDateFormat(context)
-                    dateFormat.format(value.toLong())
-                } else {
-                    // show percent for accuracy values
-                    super.formatLabel(value, isValueX) + "%"
-                }
-            }
-        })
-
-        // set manual y bounds
-        binding.graphview.getSecondScale().setMinY(0.0)
-        binding.graphview.getSecondScale()
-            .setMaxY(sortedSessions.maxOf { it.reactionTime }.toDouble())
-        binding.graphview.viewport.setMinY(0.0)
-        binding.graphview.viewport.setMaxY(100.0)
-        binding.graphview.viewport.isYAxisBoundsManual = true
-
-        // set manual x bounds
-        binding.graphview.viewport.setMinX(sortedSessions.first().date.time.toDouble())
-        binding.graphview.viewport.setMaxX(sortedSessions.last().date.time.toDouble())
-        binding.graphview.viewport.isXAxisBoundsManual = true
-
-        // activate horizontal zooming and scaling
-        binding.graphview.viewport.isScalable = true
-
-        // activate horizontal scrolling
-        binding.graphview.viewport.isScrollable = true
-
-        // as we use dates as labels, the human rounding to nice readable numbers is not necessary
-        binding.graphview.gridLabelRenderer.setHumanRounding(false)
-
-        // set number of horizontal labels
-        //binding.graphview.gridLabelRenderer.numHorizontalLabels = min(4,sortedSessions.size)
-
-        // display legend
-        binding.graphview.legendRenderer.isVisible = true
-        binding.graphview.legendRenderer.align = LegendRenderer.LegendAlign.TOP
     }
 
     private fun calculateResults(sessions: List<TestSession>) {
@@ -238,3 +163,4 @@ class StatisticsFragment : Fragment() {
         _binding = null
     }
 }
+

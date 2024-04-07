@@ -37,6 +37,7 @@
     <string name="add">Добавить</string>
     <string name="number">%1$d</string>
     <string name="time">%1$d сек.</string>
+    <string name="second">сек.</string>
     <string name="object">Объект</string>
     <string name="go">Поехали!</string>
     <string name="one">1</string>

@@ -21,16 +21,23 @@ class SettingsViewModel(
 ) : ViewModel() {
 
     val allPatientNames: LiveData<List<PatientFullName>> = pRepository.allPatients.asLiveData()
-    private val _lastSession = MutableLiveData<TestSession?>()
-    val lastSession: LiveData<TestSession?> get() = _lastSession
-    var currentPatientId: Long? = null
+    var lastSession: TestSession? = null
     private set
 
+    private val _currentPatientFullName: MutableLiveData<PatientFullName?> = MutableLiveData()
+    val currentPatientFullName: LiveData<PatientFullName?> get() = _currentPatientFullName
+
+
+    /**
+     * Called when a patient item in recycler view has been clicked
+     */
     fun onPatientClicked(patientFullName: PatientFullName) = viewModelScope.launch(Dispatchers.IO) {
+        // get last session of chosen patient
         val session = tRepository.getLastSession(patientFullName.id)
+        // update current patient data
         launch(Dispatchers.Main) {
-            _lastSession.value = session
-            currentPatientId = patientFullName.id
+            lastSession = session
+            _currentPatientFullName.value = patientFullName
         }
     }
 

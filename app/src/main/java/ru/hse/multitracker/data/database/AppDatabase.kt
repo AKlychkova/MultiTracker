@@ -8,6 +8,9 @@ import androidx.room.TypeConverters
 import ru.hse.multitracker.data.database.entities.Patient
 import ru.hse.multitracker.data.database.entities.TestSession
 
+/**
+ * Corresponds to an app database
+ */
 @Database(entities = [Patient::class, TestSession::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

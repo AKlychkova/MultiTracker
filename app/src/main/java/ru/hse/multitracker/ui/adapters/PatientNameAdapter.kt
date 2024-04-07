@@ -8,10 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.databinding.ItemPatientNameBinding
 
+/**
+ * Adapter responsible for providing views that represent patients' full names from data set
+ * @property data data set
+ * @property onPatientClick function to be invoked when item of recycler view is clicked
+ */
 class PatientNameAdapter(private var data: List<PatientFullName>,
                          private val onPatientClick: (PatientFullName) -> Unit) :
     RecyclerView.Adapter<PatientNameAdapter.PatientNameViewHolder>() {
 
+    /**
+     * Update data in recycler view
+     * @param patientNames new data set
+      */
     fun setData(patientNames:List<PatientFullName> ) {
         val result:DiffUtil.DiffResult  = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int {
@@ -38,6 +47,7 @@ class PatientNameAdapter(private var data: List<PatientFullName>,
         data = patientNames
         result.dispatchUpdatesTo(this)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PatientNameViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemPatientNameBinding.inflate(layoutInflater, parent, false)

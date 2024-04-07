@@ -17,6 +17,13 @@ class TestingViewModel(private val repository: TestSessionRepository) : ViewMode
     private val _currentSession: MutableLiveData<TestSession> = MutableLiveData<TestSession>()
     val currentSession: LiveData<TestSession> get() = _currentSession
 
+    /**
+     * Create training test session (not storing in database)
+     * @param total total amount of objects
+     * @param target amount of target objects
+     * @param speed speed of objects movement
+     * @param time time of objects movement in seconds
+     */
     fun createTrainingSession(total: Int, target: Int, speed: Int, time: Int) {
         _currentSession.value = TestSession(
             id = -1,
@@ -31,13 +38,22 @@ class TestingViewModel(private val repository: TestSessionRepository) : ViewMode
         )
     }
 
+    /**
+     * Create test session object and insert it to database
+     * @param patientId identifier of patient who is tested
+     * @param total total amount of objects
+     * @param target amount of target objects
+     * @param speed speed of objects movement
+     * @param time time of objects movement in seconds
+     */
     fun createSession(
-        pId: Long,
+        patientId: Long,
         total: Int,
         target: Int,
         speed: Int,
         time: Int
     ) = viewModelScope.launch(Dispatchers.IO) {
+        // create a session and insert it to database
         val sessionId = repository.insert(
             TestSession(
                 id = 0,
@@ -48,23 +64,36 @@ class TestingViewModel(private val repository: TestSessionRepository) : ViewMode
                 movementTime = time,
                 accuracy = 0.0,
                 reactionTime = 0,
-                patientId = pId
+                patientId = patientId
             )
         )
+        // update currentSession value
         val session = repository.getSession(sessionId)
         launch(Dispatchers.Main) {
             _currentSession.value = session
         }
     }
 
+    /**
+     * Delete current session from database
+      */
     fun deleteSession() = viewModelScope.launch(Dispatchers.IO) {
-        currentSession.value?.let { repository.delete(it) }
+        currentSession.value?.let {
+            repository.delete(it)
+        }
     }
 
+    /**
+     * Set results to current session
+     * @param reactionTime mean reaction time by attempts in seconds
+     * @param accuracy mean answer accuracy by attempts
+     */
     fun setResults(reactionTime: Int, accuracy: Double) {
         currentSession.value?.let { session ->
             session.accuracy = accuracy
             session.reactionTime = reactionTime
+
+            // if current session is not training update database record
             if (session.id != -1L) {
                 viewModelScope.launch(Dispatchers.IO) {
                     repository.update(session)

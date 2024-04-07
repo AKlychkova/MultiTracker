@@ -6,6 +6,7 @@ import ru.hse.multitracker.data.repositories.PatientRepository
 import ru.hse.multitracker.data.repositories.TestSessionRepository
 
 class MultiTrackerApplication : Application() {
+    // create database and repository objects
     val database by lazy { AppDatabase.getDatabase(this) }
     val patientRepository by lazy { PatientRepository(database.patientDao()) }
     val testSessionRepository by lazy { TestSessionRepository(database.testSessionDao()) }

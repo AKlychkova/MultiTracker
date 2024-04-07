@@ -29,7 +29,11 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getLong("id")
-        id?.let { viewModel.getPatient(it) }
+        id?.let {
+            if(it != 0L) {
+                viewModel.getPatient(it)
+            }
+        }
         setListeners()
         observeViewModel()
     }
@@ -70,7 +74,7 @@ class FormFragment : Fragment() {
                     return@setOnClickListener
                 }
             }
-            viewModel.save(
+            viewModel.onSaveClicked(
                 name = binding.nameEdittext.text.toString(),
                 surname = binding.surnameEdittext.text.toString(),
                 age = age,

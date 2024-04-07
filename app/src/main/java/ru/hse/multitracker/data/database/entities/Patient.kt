@@ -4,6 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Corresponds to a table of patients
+ * @property id identifier of patient
+ * @property name patient's first name
+ * @property surname patient's last name
+ * @property patronymic patient's patronymic (if exists)
+ * @property age patient's age (in years)
+ * @property sex patient's sex (true - male, false - female)
+ * @property diagnosis patient's diagnosis name
+ */
 @Entity(tableName = "patients")
 data class Patient(
     @PrimaryKey(autoGenerate = true) val id: Long,

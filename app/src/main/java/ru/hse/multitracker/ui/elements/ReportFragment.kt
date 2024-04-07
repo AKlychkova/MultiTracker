@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import ru.hse.multitracker.R
 import ru.hse.multitracker.databinding.FragmentReportBinding
 import ru.hse.multitracker.ui.view_models.ReportViewModel
@@ -23,8 +24,12 @@ class ReportFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // define binding
         _binding = FragmentReportBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { }
+        // handle the back button event
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.settingsFragment, false)
+        }
         callback.isEnabled = true
         return binding.root
     }
@@ -33,17 +38,30 @@ class ReportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         observeViewModel()
-        val sId = arguments?.getLong("s_id")
-        if (sId == -1L) {
-            val accuracy = arguments?.getFloat("accuracy")
-            val time = arguments?.getInt("time")
-            setText((accuracy!! * 100).roundToInt(), time!!)
-        } else {
-            viewModel.getSession(sId!!)
+
+        // get session id
+        val sessionId = arguments?.getLong("s_id")
+
+        // check if session is train(id <= 0)
+        if (sessionId != null) {
+            if (sessionId <= 0L) {
+                // get results from arguments and set them to TextViews
+                val accuracy = arguments?.getFloat("accuracy")
+                val time = arguments?.getInt("time")
+                if (accuracy != null && time != null) {
+                    setResultsText((accuracy * 100).roundToInt(), time)
+                }
+            } else {
+                // get test session info from database
+                viewModel.getSession(sessionId)
+            }
         }
     }
 
-    private fun setText(accuracyPercent: Int, time: Int) {
+    /**
+     * set results to TextViews
+     */
+    private fun setResultsText(accuracyPercent: Int, time: Int) {
         binding.reportAccuracyTextview.text = getString(R.string.percent, accuracyPercent)
         binding.reportReactionTextview.text = getString(R.string.time, time)
     }
@@ -59,7 +77,7 @@ class ReportFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.currentSession.observe(viewLifecycleOwner) {
-            setText((it.accuracy * 100).roundToInt(), it.reactionTime)
+            setResultsText((it.accuracy * 100).roundToInt(), it.reactionTime)
         }
     }
 

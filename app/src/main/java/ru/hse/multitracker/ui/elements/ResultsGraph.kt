@@ -62,6 +62,8 @@ class ResultsGraph(private val graphview: GraphView, private val context: Contex
         // activate horizontal zooming and scaling
         graphview.viewport.isScalable = true
 
+        graphview.gridLabelRenderer.setHorizontalLabelsAngle(20)
+
         // display legend
         graphview.legendRenderer.isVisible = true
         graphview.legendRenderer.align = LegendRenderer.LegendAlign.TOP

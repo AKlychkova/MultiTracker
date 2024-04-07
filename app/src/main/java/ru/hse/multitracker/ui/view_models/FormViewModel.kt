@@ -15,7 +15,11 @@ import ru.hse.multitracker.data.repositories.PatientRepository
 class FormViewModel(private val repository: PatientRepository) : ViewModel() {
     private val _currentPatient = MutableLiveData<Patient?>()
     val currentPatient: LiveData<Patient?> get() = _currentPatient
-    fun save(
+
+    /**
+     * Insert new patient or update, if he already exists
+     */
+    fun onSaveClicked(
         name: String,
         surname: String,
         patronymic: String?,
@@ -23,6 +27,7 @@ class FormViewModel(private val repository: PatientRepository) : ViewModel() {
         sex: Boolean?,
         diagnosis: String?
     ) = viewModelScope.launch(Dispatchers.IO) {
+        // Check if current patient does not exist
         if (currentPatient.value == null) {
             repository.insert(Patient(
                 id = 0,
@@ -48,12 +53,11 @@ class FormViewModel(private val repository: PatientRepository) : ViewModel() {
         }
     }
 
+    /**
+     * get patient data from database by id
+     */
     fun getPatient(id: Long) = viewModelScope.launch(Dispatchers.IO) {
-        val patient = if (id == 0L) {
-            null
-        } else {
-            repository.getPatient(id)
-        }
+        val patient = repository.getPatient(id)
         launch(Dispatchers.Main) {
             _currentPatient.value = patient
         }

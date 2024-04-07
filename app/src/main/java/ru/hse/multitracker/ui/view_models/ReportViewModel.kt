@@ -16,6 +16,10 @@ class ReportViewModel(private val repository: TestSessionRepository) : ViewModel
     private val _currentSession = MutableLiveData<TestSession>()
     val currentSession: LiveData<TestSession> get() = _currentSession
 
+    /**
+     * get session data from database by id
+     * @param id session identifier
+     */
     fun getSession(id:Long) = viewModelScope.launch(Dispatchers.IO) {
         val session = repository.getSession(id)
         launch(Dispatchers.Main) {

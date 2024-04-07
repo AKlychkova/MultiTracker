@@ -12,6 +12,8 @@ import ru.hse.multitracker.databinding.FragmentInstructionBinding
 class InstructionFragment : Fragment() {
     private var _binding: FragmentInstructionBinding? = null
     private val binding get() = _binding!!
+
+    // Default settings for train test session
     private val TRAIN_TOTAL = 2
     private val TRAIN_TARGET = 1
     private val TRAIN_SPEED = 1
@@ -23,9 +25,13 @@ class InstructionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInstructionBinding.inflate(inflater, container, false)
+
+        // set listener to trainTestButton
         binding.trainTestButton.setOnClickListener{view ->
+            // go to TrainingFragment and send train settings
             val bundle = Bundle()
-            bundle.putLong("p_id", 0L)
+            // patient id = -1, because train session is not associated with any patient
+            bundle.putLong("p_id", -1L)
             bundle.putInt("total", TRAIN_TOTAL)
             bundle.putInt("target", TRAIN_TARGET)
             bundle.putInt("speed", TRAIN_SPEED)

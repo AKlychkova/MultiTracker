@@ -20,9 +20,15 @@ class StatisticsViewModel(private val repository: PatientRepository) : ViewModel
     private val _currentPatient = MutableLiveData<PatientWithTestSessions?>()
     val currentPatient: LiveData<PatientWithTestSessions?> get() = _currentPatient
 
+    /**
+     * If patient is already chosen, update his data
+     */
     fun updateCurrentPatient() = viewModelScope.launch(Dispatchers.IO) {
+        // get current patient id
         val currentId = currentPatient.value?.patient?.id
+        // check if it exists
         if (currentId != null) {
+            // get actual data from database
             val patient = repository.getWithTestSessions(currentId)
             launch(Dispatchers.Main) {
                 _currentPatient.value = patient
@@ -30,15 +36,28 @@ class StatisticsViewModel(private val repository: PatientRepository) : ViewModel
         }
     }
 
+    /**
+     * Called when a patient item in recycler view has been clicked
+     */
     fun onPatientClicked(patientFullName: PatientFullName) = viewModelScope.launch(Dispatchers.IO) {
-        val patient = repository.getWithTestSessions(patientFullName.id)
-        launch(Dispatchers.Main) {
-            _currentPatient.value = patient
+        // check if chosen patient differ from current
+        if (patientFullName.id != currentPatient.value?.patient?.id) {
+            // get data of chosen patient
+            val patient = repository.getWithTestSessions(patientFullName.id)
+            // change currentPatient value to chosen one
+            launch(Dispatchers.Main) {
+                _currentPatient.value = patient
+            }
         }
     }
 
+    /**
+     * Called when the delete button has been clicked
+     */
     fun onDeleteClicked() = viewModelScope.launch(Dispatchers.IO) {
+        // delete chosen patient
         currentPatient.value?.let { repository.delete(it.patient) }
+        // set currentPatient value to null
         launch(Dispatchers.Main) {
             _currentPatient.value = null
         }

@@ -24,6 +24,8 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var patientNameAdapter: PatientNameAdapter
+
+    // constants used to adjust seekbars
     private val TOTAL_MIN = 2
     private val TOTAL_MAX = 10
     private val TOTAL_STEP = 1
@@ -49,14 +51,11 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // define binding
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        // define adapter for recycler view
         patientNameAdapter = PatientNameAdapter(listOf()) { fullName ->
-            binding.fullNameTextview.text = getString(
-                R.string.full_name_info,
-                fullName.surname,
-                fullName.name,
-                fullName.patronymic ?: ""
-            )
             viewModel.onPatientClicked(fullName)
         }
         return binding.root
@@ -64,26 +63,28 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // define recycler view
         binding.recyclerViewSettings.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewSettings.adapter = patientNameAdapter
+
+        // adjust seekbars
         binding.totalSeekbar.max = (TOTAL_MAX - TOTAL_MIN) / TOTAL_STEP
         binding.targetSeekbar.max = (TARGET_MAX - TARGET_MIN) / TARGET_STEP
         binding.speedSeekbar.max = (SPEED_MAX - SPEED_MIN) / SPEED_STEP
         binding.timeSeekbar.max = (TIME_MAX - TIME_MIN) / TIME_STEP
+
+        // set listeners
         setListeners()
+        // set observers
         observeViewModel()
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.hintSettingsTextview.visibility = View.VISIBLE
-        binding.settingsGroup.visibility = View.INVISIBLE
-    }
-
     private fun setListeners() {
+        // set listeners for settings seekbars
         binding.totalSeekbar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val value: Int = TOTAL_MIN + progress
+                // max target amount depend on total amount of objects (cannot be bigger)
                 binding.targetSeekbar.max = min(TARGET_MAX, value) - TARGET_MIN / TARGET_STEP
                 binding.total.text = value.toString()
             }
@@ -117,6 +118,7 @@ class SettingsFragment : Fragment() {
         )
 
         binding.addFab.setOnClickListener { view ->
+            // go to formFragment with id = 0 to create new patient profile
             val bundle = Bundle()
             bundle.putLong("id", 0)
             view.findNavController().navigate(
@@ -126,14 +128,16 @@ class SettingsFragment : Fragment() {
         }
 
         binding.helpFab.setOnClickListener(
+            // go to InstructionFragment
             Navigation.createNavigateOnClickListener(
                 R.id.action_settingsFragment_to_instructionFragment
             )
         )
 
         binding.readyButton.setOnClickListener { view ->
+            // go to TestingFragment and send settings to it
             val bundle = Bundle()
-            bundle.putLong("p_id", viewModel.currentPatientId!!)
+            bundle.putLong("p_id", viewModel.currentPatientFullName.value!!.id)
             bundle.putInt("total", TOTAL_MIN + binding.totalSeekbar.progress * TOTAL_STEP)
             bundle.putInt("target", TARGET_MIN + binding.targetSeekbar.progress * TARGET_STEP)
             bundle.putInt("speed", SPEED_MIN + binding.speedSeekbar.progress * SPEED_STEP)
@@ -145,6 +149,10 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Create OnSeekBarChangeListener that calculate value from min, step and progress
+     * and then show it in the textView
+     */
     private fun getSeekBarListener(
         min: Int,
         step: Int,
@@ -164,28 +172,40 @@ class SettingsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        // observe list of patient profiles
         viewModel.allPatientNames.observe(viewLifecycleOwner) {
+            // show hint that there are not profiles, if list of profiles is empty
             binding.hintNoUsersSettingsTextview.visibility = if (it.isEmpty()) {
                 View.VISIBLE
             } else {
                 View.INVISIBLE
             }
+            // update data in recyclerView
             it.let { patientNameAdapter.setData(it) }
         }
 
-        viewModel.lastSession.observe(viewLifecycleOwner) {
-            binding.hintSettingsTextview.visibility = View.INVISIBLE
-            binding.settingsGroup.visibility = View.VISIBLE
-            if (it == null) {
-                binding.totalSeekbar.progress = (TOTAL_DEFAULT - TOTAL_MIN) / TOTAL_STEP
-                binding.targetSeekbar.progress = (TARGET_DEFAULT - TARGET_MIN) / TARGET_STEP
-                binding.speedSeekbar.progress = (SPEED_DEFAULT - SPEED_MIN) / SPEED_STEP
-                binding.timeSeekbar.progress = (TIME_DEFAULT - TIME_MIN) / TIME_STEP
-            } else {
-                binding.totalSeekbar.progress = (it.totalAmount - TOTAL_MIN) / TOTAL_STEP
-                binding.targetSeekbar.progress = (it.targetAmount - TARGET_MIN) / TARGET_STEP
-                binding.speedSeekbar.progress = (it.speed- SPEED_MIN) / SPEED_STEP
-                binding.timeSeekbar.progress = (it.movementTime - TIME_MIN) / TIME_STEP
+        // observe current patient value
+        viewModel.currentPatientFullName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                // make views from settings group visible and hide the hint
+                binding.hintSettingsTextview.visibility = View.INVISIBLE
+                binding.settingsGroup.visibility = View.VISIBLE
+                binding.fullNameTextview.text = getString(
+                    R.string.full_name_info,
+                    it.surname,
+                    it.name,
+                    it.patronymic ?: ""
+                )
+
+                // set seekbars' progresses to last session's value or to default value
+                binding.totalSeekbar.progress =
+                    ((viewModel.lastSession?.totalAmount ?: TOTAL_DEFAULT) - TOTAL_MIN) / TOTAL_STEP
+                binding.targetSeekbar.progress =
+                    ((viewModel.lastSession?.targetAmount ?: TARGET_DEFAULT) - TARGET_MIN) / TARGET_STEP
+                binding.speedSeekbar.progress =
+                    ((viewModel.lastSession?.speed ?: SPEED_DEFAULT) - SPEED_MIN) / SPEED_STEP
+                binding.timeSeekbar.progress =
+                    ((viewModel.lastSession?.movementTime ?: TIME_DEFAULT) - TIME_MIN) / TIME_STEP
             }
         }
     }

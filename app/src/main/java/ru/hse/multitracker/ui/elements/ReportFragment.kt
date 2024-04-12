@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import ru.hse.multitracker.R
 import ru.hse.multitracker.databinding.FragmentReportBinding
@@ -67,9 +68,9 @@ class ReportFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.homeButton.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_reportFragment_to_homeFragment)
-        )
+        binding.homeButton.setOnClickListener{view ->
+            view.findNavController().popBackStack(R.id.homeFragment, inclusive = false)
+        }
         binding.statisticsButton2.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_reportFragment_to_statisticsFragment)
         )

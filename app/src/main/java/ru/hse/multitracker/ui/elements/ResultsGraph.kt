@@ -71,6 +71,17 @@ class ResultsGraph(private val graphview: GraphView, private val context: Contex
         // make bounds manual
         graphview.viewport.isXAxisBoundsManual = true
         graphview.viewport.isYAxisBoundsManual = true
+
+        // set labels' text size
+        graphview.gridLabelRenderer.setTextSize(
+            context.resources.getDimension(R.dimen.graph_text_size)
+        )
+        graphview.gridLabelRenderer.reloadStyles()
+
+        // set legend text size
+        graphview.legendRenderer.setTextSize(
+            context.resources.getDimension(R.dimen.graph_text_size)
+        )
     }
 
     fun updateData(sessions: List<TestSession>) {

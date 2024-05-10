@@ -1,6 +1,7 @@
 package ru.hse.multitracker.ui.elements
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,9 @@ class InstructionFragment : Fragment() {
                 bundle
             )
         }
+
+        // to perform the movement action
+        binding.instructionTextview.movementMethod = ScrollingMovementMethod()
         return binding.root
     }
 

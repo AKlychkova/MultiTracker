@@ -10,54 +10,54 @@
         android:id="@+id/name_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/surname_edittext"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <EditText
         android:id="@+id/surname_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/surname"
         android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/patronymic_edittext"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/name_edittext"
         app:layout_constraintTop_toBottomOf="@+id/name_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <EditText
         android:id="@+id/patronymic_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/patronymic"
         android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/age_edittext"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/surname_edittext"
         app:layout_constraintTop_toBottomOf="@+id/surname_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <EditText
         android:id="@+id/age_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/age"
         android:inputType="number"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/patronymic_edittext"
         app:layout_constraintTop_toBottomOf="@+id/patronymic_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -72,55 +72,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/male_radiobutton_text"
-            android:textSize="24sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/female_radiobutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/female_radiobutton_text"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/sex_hint_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/sex"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/age_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/age_edittext" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/name_edittext"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/diagnosis_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/diagnosis"
         android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintWidth_percent="0.6" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/age_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/age_edittext"
+        app:layout_constraintWidth_percent="0.4" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/save"
-        android:textSize="24sp"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

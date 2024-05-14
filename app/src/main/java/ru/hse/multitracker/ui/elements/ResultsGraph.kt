@@ -110,4 +110,8 @@ class ResultsGraph(private val graphview: GraphView, private val context: Contex
         graphview.viewport.setMinX(sessions.first().date.time.toDouble())
         graphview.viewport.setMaxX(sessions.last().date.time.toDouble())
     }
+
+    fun setVisibility(visibility: Int) {
+        graphview.visibility = visibility
+    }
 }

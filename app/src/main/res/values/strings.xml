@@ -61,4 +61,5 @@
         Вы можете пройти обучающее тестирование, его результаты не будут сохранены.
     </string>
     <string name="instruction_title">Инструкция</string>
+    <string name="hint_not_enough_tests">Пройденных тестирований недостаточно для отображения графика</string>
 </resources>

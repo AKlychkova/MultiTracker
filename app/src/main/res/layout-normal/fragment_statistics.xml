@@ -10,14 +10,14 @@
         android:id="@+id/test_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="best_textview,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,reaction_textview,accuracy_textview,worst_textview,mean_textview,graphview" />
+        app:constraint_referenced_ids="best_textview,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,reaction_textview,accuracy_textview,worst_textview,mean_textview,graphview,hint_not_enough_tests" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/statistics_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="best_textview,to_update_form_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests,graphview"
+        app:constraint_referenced_ids="best_textview,to_update_form_button,delete_button,accuracy_worst_textview,accuracy_mean_textview,reaction_mean_textview,accuracy_best_textview,reaction_worst_textview,reaction_best_textview,accuracy_textview,reaction_textview,worst_textview,mean_textview,info_name_textview,info_age_textview,info_sex_textview,info_diagnosis_textview,hint_no_tests,graphview,hint_not_enough_tests"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -277,5 +277,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/accuracy_mean_textview" />
+
+    <TextView
+        android:id="@+id/hint_not_enough_tests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="@string/hint_not_enough_tests"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/graphview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/graphview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

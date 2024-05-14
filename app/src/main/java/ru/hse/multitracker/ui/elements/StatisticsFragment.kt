@@ -178,7 +178,7 @@ class StatisticsFragment : Fragment() {
                 } else {
                     // show views from test info group
                     binding.testInfo.visibility = View.VISIBLE
-                    // make the hint invisible
+                    // make the hint that this patient have not finished test sessions invisible
                     binding.hintNoTests.visibility = View.INVISIBLE
 
                     // show results
@@ -196,10 +196,21 @@ class StatisticsFragment : Fragment() {
                     binding.reactionMeanTextview.text =
                         getString(R.string.time, results.meanReactionTime)
 
-                    // update graph
-                    graph.updateData(
-                        patientWithTestSessions.sessions.sortedBy { session -> session.date }
-                    )
+                    if (patientWithTestSessions.sessions.size == 1) {
+                        // cannot show graph if there is only one test session
+                        graph.setVisibility(View.INVISIBLE)
+                        // show appropriate hint
+                        binding.hintNotEnoughTests.visibility = View.VISIBLE
+                    } else {
+                        // hide hint
+                        binding.hintNotEnoughTests.visibility = View.INVISIBLE
+                        // make graph visible
+                        graph.setVisibility(View.VISIBLE)
+                        // update graph
+                        graph.updateData(
+                            patientWithTestSessions.sessions.sortedBy { session -> session.date }
+                        )
+                    }
                 }
             }
         }

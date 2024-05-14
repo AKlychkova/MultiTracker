@@ -11,12 +11,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.activity.addCallback
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -34,27 +30,29 @@ class TestingFragment : Fragment() {
     private var _binding: FragmentTestingBinding? = null
     private val binding get() = _binding!!
 
-    // total amount of attempts
-    private var totalAttemptCount: Int = 5
+    private lateinit var testSystem: TestSystem
 
-    // the number of attempts that have passed
-    private var attemptCount: Int = 0
+//    // total amount of attempts
+//    private var totalAttemptCount: Int = 5
+//
+//    // the number of attempts that have passed
+//    private var attemptCount: Int = 0
 
     // array of objects
-    private var objects: ArrayList<ImageButton> = ArrayList()
+    private lateinit var objects: Set<Object>
 
-    // the number of right answers
-    private var rightAnswersCount: Int = 0
-
-    // sum of reaction time in seconds
-    private var sumReactionTime: Int = 0
+//    // the number of right answers
+//    private var rightAnswersCount: Int = 0
+//
+//    // sum of reaction time in seconds
+//    private var sumReactionTime: Int = 0
 
     // screen borders for objects
     private var rightBorder: Int = 0
     private var bottomBorder: Int = 0
 
-    // amount of objects have been clicked in this attempt
-    private var objectsClicked: Int = 0
+//    // amount of objects have been clicked in this attempt
+//    private var objectsClicked: Int = 0
 
     // animators that are running at the moment
     private var currentAnimators: ArrayList<ObjectAnimator> = ArrayList()
@@ -108,11 +106,10 @@ class TestingFragment : Fragment() {
             binding.goButton.visibility = View.GONE
             binding.chronometer.visibility = View.GONE
             // make all objects looks same
-            for (i in 0..<objects.size) {
-                objects[i].setBackgroundResource(R.drawable.ordinary_object_button)
-                objects[i].setImageDrawable(null)
+            objects.forEach {obj ->
+                obj.button.setBackgroundResource(R.drawable.ordinary_object_button)
+                obj.button.setImageDrawable(null)
             }
-            // set animators
             animate()
         }
     }
@@ -151,11 +148,11 @@ class TestingFragment : Fragment() {
             // calculate amount of curves
             val curveAmount: Int = max((time * speed / 30.0).toInt(), 1)
 
-            for (i in 0..<objects.size) {
+            objects.forEach{obj ->
                 // generate path
-                val path = randomPath(objects[i].x, objects[i].y, curveAmount)
+                val path = randomPath(obj.button.x, obj.button.y, curveAmount)
                 // create animator
-                val animator = ObjectAnimator.ofFloat(objects[i], View.X, View.Y, path).apply {
+                val animator = ObjectAnimator.ofFloat(obj.button, View.X, View.Y, path).apply {
                     // set duration to movementTime
                     duration = (time * 1000).toLong()
                     // set linear interpolator to make speed linear
@@ -171,7 +168,7 @@ class TestingFragment : Fragment() {
 
                 override fun onAnimationEnd(p0: Animator) {
                     // make objects clickable
-                    objects.forEach { obj -> obj.isClickable = true }
+                    objects.forEach { obj -> obj.button.isClickable = true }
                     // start chronometer
                     binding.chronometer.visibility = View.VISIBLE
                     binding.chronometer.base = SystemClock.elapsedRealtime()
@@ -196,7 +193,6 @@ class TestingFragment : Fragment() {
         if (pId != null && total != null && target != null && speed != null && time != null) {
             // check if session is train(patient id <= 0) or not
             if (pId <= 0) {
-                totalAttemptCount = 1
                 viewModel.createTrainingSession(total, target, speed, time)
             } else {
                 viewModel.createSession(pId, total, target, speed, time)
@@ -206,103 +202,77 @@ class TestingFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.currentSession.observe(viewLifecycleOwner) { session ->
-            for (i in 0..<session.totalAmount) {
-                // create objects
-                objects.add(createObject())
-                if (i < session.targetAmount) {
-                    // make green
-                    objects[i].setBackgroundResource(R.drawable.target_object_button)
-                    // set right answer click listener
-                    objects[i].setOnClickListener {
-                        // make green and draw check sign
-                        objects[i].setBackgroundResource(R.drawable.target_object_button)
-                        objects[i].setImageDrawable(
-                            AppCompatResources.getDrawable(
-                                requireContext(),
-                                R.drawable.baseline_check_24
-                            )
+            // define test system
+            testSystem =
+                TestSystem(session, if (viewModel.isCurrentSessionTrain() == true) 1 else 5)
+            // create objects
+            val factory = ObjectSetFactory(requireContext())
+            objects = factory.createObjectSet(
+                session.totalAmount,
+                session.targetAmount,
+                0,
+                rightBorder,
+                0,
+                bottomBorder,
+                {
+                    // make green and draw check sign
+                    it.setBackgroundResource(R.drawable.target_object_button)
+                    (it as ImageButton).setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.baseline_check_24
                         )
+                    )
 
-                        // increment right answers number
-                        rightAnswersCount += 1
-                        // increment objects clicked number
-                        objectsClicked += 1
-                        // check if attempt has been finished
-                        if (objectsClicked >= session.targetAmount) {
-                            finishAttempt(it)
-                        }
+                    val isFinished = testSystem.rightAnswer()
+                    if (isFinished) {
+                        finishAttempt(it)
                     }
-                } else {
-                    // set mistake click listener
-                    objects[i].setOnClickListener {
-                        // make red and draw cross sign
-                        objects[i].setBackgroundResource(R.drawable.mistake_object_button)
-                        objects[i].setImageDrawable(
-                            AppCompatResources.getDrawable(
-                                requireContext(),
-                                R.drawable.baseline_clear_24
-                            )
+                },
+                { // make red and draw cross sign
+                    it.setBackgroundResource(R.drawable.mistake_object_button)
+                    (it as ImageButton).setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.baseline_clear_24
                         )
-                        // increment objects clicked number
-                        objectsClicked += 1
-                        // check if session has been finished
-                        if (objectsClicked >= session.targetAmount) {
-                            finishAttempt(it)
-                        }
+                    )
+                    // increment objects clicked number
+                    val isFinished = testSystem.mistakeAnswer()
+                    if (isFinished) {
+                        finishAttempt(it)
                     }
                 }
-                // make objects not clickable
-                objects[i].isClickable = false
-            }
+            )
+
+            // add objects to layout
+            objects.forEach { obj -> binding.field.addView(obj.button) }
+
+            // make objects not clickable
+            objects.forEach { obj -> obj.button.isClickable = false }
+
             // make goButton visible
             binding.goButton.visibility = View.VISIBLE
         }
     }
 
-    /**
-     * Create object
-     */
-    private fun createObject(): ImageButton {
-        val button = ImageButton(requireContext())
-        button.layoutParams = RelativeLayout.LayoutParams(
-            resources.getDimensionPixelSize(R.dimen.object_size),
-            resources.getDimensionPixelSize(R.dimen.object_size)
-        )
-        button.setBackgroundResource(R.drawable.ordinary_object_button)
-        button.setPadding(resources.getDimensionPixelSize(R.dimen.object_padding))
-        button.scaleType = ImageView.ScaleType.FIT_CENTER
-        button.imageTintList = ContextCompat.getColorStateList(requireContext(), R.color.white)
-        button.contentDescription = getString(R.string.`object`)
-
-        // generate coordinates
-        button.translationX = Random.nextInt(rightBorder).toFloat()
-        button.translationY = Random.nextInt(bottomBorder).toFloat()
-
-        button.visibility = View.VISIBLE
-
-        // add to layout
-        binding.field.addView(button)
-        return button
-    }
-
     private fun finishAttempt(view: View) {
         // make objects not clickable
-        objects.forEach { it.isClickable = false }
+        objects.forEach { obj -> obj.button.isClickable = false }
         // stop chronometer
         binding.chronometer.stop()
-        // add chronometer time to sumReactionTime
-        sumReactionTime += ((SystemClock.elapsedRealtime() - binding.chronometer.base) / 1000).toInt()
+        // calculate reaction time
+        val reactionTime =
+            ((SystemClock.elapsedRealtime() - binding.chronometer.base) / 1000).toInt()
         // clear list of current animators
         currentAnimators.clear()
-        // increment finished attempts count
-        attemptCount += 1
+
         // check if all attempts are finished
-        if (attemptCount >= totalAttemptCount) {
+        if (testSystem.finishAttempt(reactionTime)) {
             viewModel.currentSession.value?.let { currentSession ->
                 // calculate mean results
-                val meanReactionTime: Int = sumReactionTime / totalAttemptCount
-                val accuracy: Double =
-                    rightAnswersCount.toDouble() / (currentSession.targetAmount * totalAttemptCount)
+                val meanReactionTime = testSystem.getMeanReactionTime()
+                val accuracy = testSystem.getMeanAccuracy()
                 // update current test session
                 viewModel.setResults(meanReactionTime, accuracy)
                 // go to reportFragment
@@ -316,11 +286,10 @@ class TestingFragment : Fragment() {
                 )
             }
         } else {
-            // clear clicked objects amount
-            objectsClicked = 0
             // show target objects
-            for (i in 0..<viewModel.currentSession.value!!.targetAmount) {
-                objects[i].setBackgroundResource(R.drawable.target_object_button)
+            objects.forEach { obj ->
+                if (obj.isTarget)
+                    obj.button.setBackgroundResource(R.drawable.target_object_button)
             }
             // make goButton visible
             binding.goButton.visibility = View.VISIBLE

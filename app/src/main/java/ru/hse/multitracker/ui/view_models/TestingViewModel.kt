@@ -74,9 +74,15 @@ class TestingViewModel(private val repository: TestSessionRepository) : ViewMode
         }
     }
 
+    fun isCurrentSessionTrain(): Boolean? {
+        currentSession.value?.let {
+            return it.id < 0
+        } ?: return null
+    }
+
     /**
      * Delete current session from database
-      */
+     */
     fun deleteSession() = viewModelScope.launch(Dispatchers.IO) {
         currentSession.value?.let {
             repository.delete(it)

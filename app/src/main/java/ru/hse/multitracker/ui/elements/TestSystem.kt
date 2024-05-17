@@ -6,7 +6,7 @@ import ru.hse.multitracker.data.database.entities.TestSession
  * @param session current test session
  * @param totalAttemptCount total amount of attempts (default = 5)
  */
-class TestSystem( private val session: TestSession, private val totalAttemptCount: Int = 5) {
+class TestSystem(val session: TestSession, val totalAttemptCount: Int = 5) {
     // the number of attempts that have passed
     private var attemptCount: Int = 0
 
@@ -31,6 +31,10 @@ class TestSystem( private val session: TestSession, private val totalAttemptCoun
         return isFinished()
     }
 
+    /**
+     * Handle worse answer
+     * @return if attempt has been finished
+     */
     fun mistakeAnswer() : Boolean {
         // increment objects clicked number
         objectsClicked += 1
@@ -59,10 +63,16 @@ class TestSystem( private val session: TestSession, private val totalAttemptCoun
         return attemptCount >= totalAttemptCount
     }
 
+    /**
+     * @return mean accuracy for finished attempts
+     */
     fun getMeanAccuracy() : Double {
         return rightAnswersCount.toDouble() / (session.targetAmount * attemptCount)
     }
 
+    /**
+     * @return mean reaction time for finished attempts
+     */
     fun getMeanReactionTime() : Int {
         return sumReactionTime / attemptCount
     }

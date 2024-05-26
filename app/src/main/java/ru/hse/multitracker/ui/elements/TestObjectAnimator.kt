@@ -11,7 +11,7 @@ import kotlin.random.Random
 class TestObjectAnimator {
     fun animate(
         testSystem: TestSystem,
-        objects: List<Object>,
+        objects: List<TestObject>,
         xFrom: Int,
         xUntil: Int,
         yFrom: Int,

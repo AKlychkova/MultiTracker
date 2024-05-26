@@ -28,7 +28,7 @@ class TestingFragment : Fragment() {
     private lateinit var testSystem: TestSystem
 
     // array of objects
-    private lateinit var objects: List<Object>
+    private lateinit var objects: List<TestObject>
 
     // screen borders for objects
     private var rightBorder: Int = 0
@@ -144,7 +144,7 @@ class TestingFragment : Fragment() {
             testSystem =
                 TestSystem(session, if (viewModel.isCurrentSessionTrain() == true) 1 else 5)
             // create objects
-            val factory = Object.ObjectListFactory(requireContext())
+            val factory = TestObject.TestObjectListFactory(requireContext())
             objects = factory.createObjectList(
                 session.totalAmount,
                 session.targetAmount,

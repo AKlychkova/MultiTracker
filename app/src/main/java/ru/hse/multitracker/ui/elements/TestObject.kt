@@ -11,7 +11,7 @@ import ru.hse.multitracker.R
 import kotlin.math.abs
 import kotlin.random.Random
 
-class Object private constructor(
+class TestObject private constructor(
     val button: ImageButton,
     val isTarget: Boolean,
     private var size: Int
@@ -44,7 +44,7 @@ class Object private constructor(
      * Create a set of Objects
      * @param context Current context
      */
-    class ObjectListFactory(val context: Context) {
+    class TestObjectListFactory(val context: Context) {
         // coordinates of already created objects
         private val usedCoordinates: MutableList<Pair<Float, Float>> = mutableListOf()
 
@@ -94,12 +94,12 @@ class Object private constructor(
             yUntil: Int,
             targetListener: View.OnClickListener,
             notTargetListener: View.OnClickListener
-        ): List<Object> {
+        ): List<TestObject> {
             // create set
-            val list: List<Object> = buildList {
+            val list: List<TestObject> = buildList {
                 for (i in 1..total) {
                     add(
-                        Object(
+                        TestObject(
                             createButton(xFrom, xUntil, yFrom, yUntil), i <= target,
                             context.resources.getDimensionPixelSize(R.dimen.object_size)
                         )

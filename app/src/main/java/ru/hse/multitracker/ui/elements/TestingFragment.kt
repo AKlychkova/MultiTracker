@@ -26,6 +26,7 @@ class TestingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var testSystem: TestSystem
+    private lateinit var testAnimator: TestObjectAnimator
 
     // array of objects
     private lateinit var objects: List<TestObject>
@@ -95,9 +96,7 @@ class TestingFragment : Fragment() {
     }
 
     private fun animate() {
-        val testAnimator = TestObjectAnimator()
-        currentAnimators =
-            testAnimator.animate(testSystem, objects, 0, rightBorder, 0, bottomBorder)
+        currentAnimators = testAnimator.animate(objects)
         // set animation end listener
         currentAnimators.getOrNull(0)?.addListener(
             object : Animator.AnimatorListener {
@@ -143,6 +142,13 @@ class TestingFragment : Fragment() {
             // define test system
             testSystem =
                 TestSystem(session, if (viewModel.isCurrentSessionTrain() == true) 1 else 5)
+            testAnimator = TestObjectAnimator(
+                testSystem,
+                0,
+                rightBorder,
+                0,
+                bottomBorder
+            )
             // create objects
             val factory = TestObject.TestObjectListFactory(requireContext())
             objects = factory.createObjectList(

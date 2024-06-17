@@ -22,8 +22,8 @@ class TestObject private constructor(
     /**
      * @return object's radius
      */
-    fun getRadius(): Int {
-        return size / 2
+    fun getRadius(): Float {
+        return size.toFloat() / 2
     }
 
     /**

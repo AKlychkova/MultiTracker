@@ -6,66 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".ui.elements.FormFragment">
 
-    <EditText
-        android:id="@+id/name_edittext"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
         android:hint="@string/name"
-        android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/surname_edittext"
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/surname_textfield"
+        app:layout_constraintStart_toStartOf="@+id/surname_textfield"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.6">
 
-    <EditText
-        android:id="@+id/surname_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/surname_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
         android:hint="@string/surname"
-        android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/patronymic_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/name_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/patronymic_textfield"
+        app:layout_constraintStart_toStartOf="@+id/patronymic_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/name_textfield"
+        app:layout_constraintWidth_percent="0.6">
 
-    <EditText
-        android:id="@+id/patronymic_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/patronymic_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
         android:hint="@string/patronymic"
-        android:inputType="text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/age_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/surname_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/age_textfield"
+        app:layout_constraintStart_toStartOf="@+id/age_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/surname_textfield"
+        app:layout_constraintWidth_percent="0.6">
 
-    <EditText
-        android:id="@+id/age_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/age_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
         android:hint="@string/age"
-        android:inputType="number"
-        android:textSize="24sp"
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/patronymic_edittext"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintTop_toBottomOf="@+id/patronymic_textfield"
+        app:layout_constraintWidth_percent="0.6">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/sex_hint_textview"
-        app:layout_constraintTop_toBottomOf="@+id/sex_hint_textview">
+        app:layout_constraintBottom_toTopOf="@+id/diagnosis_textfield"
+        app:layout_constraintStart_toStartOf="@+id/age_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/age_textfield">
+
+        <TextView
+            android:id="@+id/sex_hint_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sex"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
         <RadioButton
             android:id="@+id/male_radiobutton"
@@ -86,28 +125,26 @@
             android:textSize="24sp" />
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/sex_hint_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/sex"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/age_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/age_edittext" />
 
-    <EditText
-        android:id="@+id/diagnosis_edittext"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/diagnosis_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
         android:hint="@string/diagnosis"
-        android:inputType="text"
-        android:textSize="24sp"
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/radioGroup"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.6">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/save_button"
@@ -115,12 +152,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="18dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="18dp"
         android:text="@string/save"
         android:textSize="24sp"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -6,58 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".ui.elements.FormFragment">
 
-    <EditText
-        android:id="@+id/name_edittext"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
         android:hint="@string/name"
-        android:inputType="text"
-        android:textSize="16sp"
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/surname_textfield"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.4" />
+        app:layout_constraintWidth_percent="0.4">
 
-    <EditText
-        android:id="@+id/surname_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/surname_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
         android:hint="@string/surname"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/name_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/name_edittext"
-        app:layout_constraintWidth_percent="0.4" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/patronymic_textfield"
+        app:layout_constraintStart_toStartOf="@+id/name_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/name_textfield"
+        app:layout_constraintWidth_percent="0.4">
 
-    <EditText
-        android:id="@+id/patronymic_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/patronymic_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
         android:hint="@string/patronymic"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/surname_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/surname_edittext"
-        app:layout_constraintWidth_percent="0.4" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/age_textfield"
+        app:layout_constraintStart_toStartOf="@+id/surname_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/surname_textfield"
+        app:layout_constraintWidth_percent="0.4">
 
-    <EditText
-        android:id="@+id/age_edittext"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/age_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
         android:hint="@string/age"
-        android:inputType="number"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/patronymic_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/patronymic_edittext"
-        app:layout_constraintWidth_percent="0.4" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toTopOf="@+id/diagnosis_textfield"
+        app:layout_constraintStart_toStartOf="@+id/patronymic_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/patronymic_textfield"
+        app:layout_constraintWidth_percent="0.4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -90,21 +118,28 @@
         android:layout_marginTop="16dp"
         android:text="@string/sex"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/name_edittext"
+        app:layout_constraintStart_toEndOf="@+id/name_textfield"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/diagnosis_edittext"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/diagnosis_textfield"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
         android:hint="@string/diagnosis"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/age_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/age_edittext"
-        app:layout_constraintWidth_percent="0.4" />
+        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/age_textfield"
+        app:layout_constraintTop_toBottomOf="@+id/age_textfield"
+        app:layout_constraintWidth_percent="0.4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/save_button"

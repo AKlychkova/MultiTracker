@@ -58,12 +58,12 @@
 
     <Button
         android:id="@+id/statistics_button_2"
+        style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:maxWidth="1000dp"
         android:text="@string/all_statistics"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,18 +71,14 @@
 
     <Button
         android:id="@+id/home_button"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="40dp"
-        android:contentDescription="@string/to_home_screen"
-        android:paddingLeft="32dp"
-        android:paddingTop="10dp"
-        android:paddingRight="32dp"
-        android:paddingBottom="10dp"
+        android:text="@string/home_screen"
         android:textSize="34sp"
         app:icon="@drawable/baseline_home_24"
-        app:iconGravity="textStart"
-        app:iconSize="40sp"
+        app:iconSize="34sp"
         app:layout_constraintBottom_toBottomOf="@+id/statistics_button_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/statistics_button_2" />

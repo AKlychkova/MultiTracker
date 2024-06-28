@@ -8,6 +8,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
+        style="@style/Widget.Material3.FloatingActionButton.Tertiary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -21,6 +22,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/help_fab"
+        style="@style/Widget.Material3.FloatingActionButton.Tertiary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,25 +39,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:constraint_referenced_ids="total_seekbar,total_textview,target_textview,speed_textview,time_textview,target_seekbar,speed_seekbar,time_seekbar,ready_button,fullName_textview,total,target,speed,time" />
+        app:constraint_referenced_ids="total_slider,total_textview,target_textview,speed_textview,time_textview,target_slider,speed_slider,time_slider,ready_button,fullName_textview"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_settings"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/material_dynamic_neutral95"
+        android:background="@color/md_theme_inverseOnSurface"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.35"
         tools:itemCount="20"
-        tools:listitem="@layout/item_patient_name"/>
+        tools:listitem="@layout/item_patient_name" />
 
     <TextView
         android:id="@+id/hint_settings_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:hint="@string/statistics_hint"
         android:textSize="16sp"
         android:visibility="visible"
@@ -66,9 +72,12 @@
 
     <TextView
         android:id="@+id/hint_no_users_settings_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:elevation="10dp"
+        android:gravity="center"
         android:hint="@string/no_users"
         android:textSize="16sp"
         android:visibility="invisible"
@@ -76,21 +85,6 @@
         app:layout_constraintEnd_toEndOf="@+id/recyclerView_settings"
         app:layout_constraintStart_toStartOf="@+id/recyclerView_settings"
         app:layout_constraintTop_toTopOf="@+id/recyclerView_settings" />
-
-    <SeekBar
-        android:id="@+id/total_seekbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:max="8"
-        android:progress="0"
-        android:progressTint="@color/design_default_color_primary_dark"
-        android:thumb="@drawable/baseline_circle_24"
-        android:thumbTint="@color/design_default_color_primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/total_textview"
-        app:layout_constraintTop_toBottomOf="@+id/total_textview" />
 
     <TextView
         android:id="@+id/total_textview"
@@ -132,45 +126,64 @@
         app:layout_constraintStart_toStartOf="@+id/speed_textview"
         app:layout_constraintTop_toBottomOf="@+id/speed_textview" />
 
-    <SeekBar
-        android:id="@+id/target_seekbar"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/total_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:max="4"
-        android:progress="0"
-        android:progressTint="@color/design_default_color_primary_dark"
-        android:thumb="@drawable/baseline_circle_24"
-        android:thumbTint="@color/design_default_color_primary"
-        app:layout_constraintEnd_toEndOf="@+id/total_seekbar"
+        android:layout_marginEnd="16dp"
+        android:stepSize="1"
+        android:value="5"
+        android:valueFrom="2"
+        android:valueTo="10"
+        app:trackColorActive = "@color/yellow"
+        app:thumbColor = "@color/yellow"
+        app:tickVisible = "false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/total_textview"
+        app:layout_constraintTop_toBottomOf="@+id/total_textview" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/target_slider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:stepSize="1"
+        android:value="3"
+        android:valueFrom="1"
+        android:valueTo="5"
+        app:trackColorActive = "@color/yellow"
+        app:thumbColor = "@color/yellow"
+        app:tickVisible = "false"
+        app:layout_constraintEnd_toEndOf="@+id/total_slider"
         app:layout_constraintStart_toStartOf="@+id/target_textview"
         app:layout_constraintTop_toBottomOf="@+id/target_textview" />
 
-    <SeekBar
-        android:id="@+id/speed_seekbar"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/speed_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:max="9"
-        android:progress="0"
-        android:progressTint="@color/design_default_color_primary_dark"
-        android:thumb="@drawable/baseline_circle_24"
-        android:thumbTint="@color/design_default_color_primary"
-        app:layout_constraintEnd_toEndOf="@+id/target_seekbar"
+        android:stepSize="1"
+        android:value="5"
+        android:valueFrom="1"
+        android:valueTo="10"
+        app:trackColorActive = "@color/yellow"
+        app:thumbColor = "@color/yellow"
+        app:tickVisible = "false"
+        app:layout_constraintEnd_toEndOf="@+id/target_slider"
         app:layout_constraintStart_toStartOf="@+id/speed_textview"
         app:layout_constraintTop_toBottomOf="@+id/speed_textview" />
 
-    <SeekBar
-        android:id="@+id/time_seekbar"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/time_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:max="11"
-        android:progress="0"
-        android:progressTint="@color/design_default_color_primary_dark"
-        android:thumb="@drawable/baseline_circle_24"
-        android:thumbTint="@color/design_default_color_primary"
-        app:layout_constraintEnd_toEndOf="@+id/speed_seekbar"
+        android:stepSize="5"
+        android:value="30"
+        android:valueFrom="5"
+        android:valueTo="60"
+        app:trackColorActive = "@color/yellow"
+        app:thumbColor = "@color/yellow"
+        app:tickVisible = "false"
+        app:layout_constraintEnd_toEndOf="@+id/speed_slider"
         app:layout_constraintStart_toStartOf="@+id/time_textview"
         app:layout_constraintTop_toBottomOf="@+id/time_textview" />
 
@@ -196,57 +209,5 @@
         app:layout_constraintStart_toEndOf="@+id/recyclerView_settings"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Иванов Иван Иванович" />
-
-    <TextView
-        android:id="@+id/total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/one"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/total_textview"
-        app:layout_constraintStart_toEndOf="@+id/total_textview"
-        app:layout_constraintTop_toTopOf="@+id/total_textview"
-        tools:text="5" />
-
-    <TextView
-        android:id="@+id/target"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/one"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/target_textview"
-        app:layout_constraintStart_toEndOf="@+id/target_textview"
-        app:layout_constraintTop_toTopOf="@+id/target_textview"
-        tools:text="3" />
-
-    <TextView
-        android:id="@+id/speed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/one"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/speed_textview"
-        app:layout_constraintStart_toEndOf="@+id/speed_textview"
-        app:layout_constraintTop_toTopOf="@+id/speed_textview"
-        tools:text="5" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/five_second"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/time_textview"
-        app:layout_constraintStart_toEndOf="@+id/time_textview"
-        app:layout_constraintTop_toTopOf="@+id/time_textview"
-        tools:text="30 сек." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

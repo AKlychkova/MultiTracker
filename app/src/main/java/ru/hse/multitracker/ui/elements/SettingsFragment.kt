@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -26,25 +23,11 @@ class SettingsFragment : Fragment() {
     private lateinit var patientNameAdapter: PatientNameAdapter
 
     // constants used to adjust seekbars
-    private val TOTAL_MIN = 2
-    private val TOTAL_MAX = 10
-    private val TOTAL_STEP = 1
-    private val TOTAL_DEFAULT = 5
-
-    private val TARGET_MIN = 1
-    private val TARGET_MAX = 5
-    private val TARGET_STEP = 1
-    private val TARGET_DEFAULT = 3
-
-    private val SPEED_MIN = 1
-    private val SPEED_MAX = 10
-    private val SPEED_STEP = 1
-    private val SPEED_DEFAULT = 5
-
-    private val TIME_MIN = 5
-    private val TIME_MAX = 60
-    private val TIME_STEP = 5
-    private val TIME_DEFAULT = 30
+    private val TOTAL_DEFAULT = 5.0f
+    private val TARGET_MAX = 5.0f   // target amount cannot be bigger than 5
+    private val TARGET_DEFAULT = 3.0f
+    private val SPEED_DEFAULT = 5.0f
+    private val TIME_DEFAULT = 30.0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,11 +50,9 @@ class SettingsFragment : Fragment() {
         binding.recyclerViewSettings.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewSettings.adapter = patientNameAdapter
 
-        // adjust seekbars
-        binding.totalSeekbar.max = (TOTAL_MAX - TOTAL_MIN) / TOTAL_STEP
-        binding.targetSeekbar.max = (TARGET_MAX - TARGET_MIN) / TARGET_STEP
-        binding.speedSeekbar.max = (SPEED_MAX - SPEED_MIN) / SPEED_STEP
-        binding.timeSeekbar.max = (TIME_MAX - TIME_MIN) / TIME_STEP
+        binding.timeSlider.setLabelFormatter { value ->
+            getString(R.string.time, value.toInt())
+        }
 
         // set listeners
         setListeners()
@@ -80,42 +61,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setListeners() {
-        // set listeners for settings seekbars
-        binding.totalSeekbar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val value: Int = TOTAL_MIN + progress
-                // max target amount depend on total amount of objects (cannot be bigger)
-                binding.targetSeekbar.max = min(TARGET_MAX, value) - TARGET_MIN / TARGET_STEP
-                binding.total.text = value.toString()
+        // max target amount depend on total amount of objects (cannot be bigger)
+        binding.totalSlider.addOnChangeListener { slider, value, fromUser ->
+            val valueTo = min(TARGET_MAX, value)
+            if (binding.targetSlider.value > valueTo) {
+                binding.targetSlider.value = valueTo
             }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {}
-            override fun onStopTrackingTouch(p0: SeekBar?) {}
-        })
-        binding.targetSeekbar.setOnSeekBarChangeListener(
-            getSeekBarListener(
-                TARGET_MIN,
-                TARGET_STEP,
-                binding.target,
-                R.string.number
-            )
-        )
-        binding.speedSeekbar.setOnSeekBarChangeListener(
-            getSeekBarListener(
-                SPEED_MIN,
-                SPEED_STEP,
-                binding.speed,
-                R.string.number
-            )
-        )
-        binding.timeSeekbar.setOnSeekBarChangeListener(
-            getSeekBarListener(
-                TIME_MIN,
-                TIME_STEP,
-                binding.time,
-                R.string.time
-            )
-        )
+            binding.targetSlider.valueTo = valueTo
+        }
 
         binding.addFab.setOnClickListener { view ->
             // go to formFragment with id = 0 to create new patient profile
@@ -138,36 +91,14 @@ class SettingsFragment : Fragment() {
             // go to TestingFragment and send settings to it
             val bundle = Bundle()
             bundle.putLong("p_id", viewModel.currentPatientFullName.value!!.id)
-            bundle.putInt("total", TOTAL_MIN + binding.totalSeekbar.progress * TOTAL_STEP)
-            bundle.putInt("target", TARGET_MIN + binding.targetSeekbar.progress * TARGET_STEP)
-            bundle.putInt("speed", SPEED_MIN + binding.speedSeekbar.progress * SPEED_STEP)
-            bundle.putInt("time", TIME_MIN + binding.timeSeekbar.progress * TIME_STEP)
+            bundle.putInt("total", binding.totalSlider.value.toInt())
+            bundle.putInt("target", binding.targetSlider.value.toInt())
+            bundle.putInt("speed", binding.speedSlider.value.toInt())
+            bundle.putInt("time", binding.timeSlider.value.toInt())
             view.findNavController().navigate(
                 R.id.action_settingsFragment_to_testingFragment,
                 bundle
             )
-        }
-    }
-
-    /**
-     * Create OnSeekBarChangeListener that calculate value from min, step and progress
-     * and then show it in the textView
-     */
-    private fun getSeekBarListener(
-        min: Int,
-        step: Int,
-        textView: TextView,
-        stringId: Int
-    ): OnSeekBarChangeListener {
-        return object : OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val value: Int = min + (progress * step)
-                textView.text = getString(stringId, value)
-            }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {}
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {}
         }
     }
 
@@ -198,14 +129,14 @@ class SettingsFragment : Fragment() {
                 )
 
                 // set seekbars' progresses to last session's value or to default value
-                binding.totalSeekbar.progress =
-                    ((viewModel.lastSession?.totalAmount ?: TOTAL_DEFAULT) - TOTAL_MIN) / TOTAL_STEP
-                binding.targetSeekbar.progress =
-                    ((viewModel.lastSession?.targetAmount ?: TARGET_DEFAULT) - TARGET_MIN) / TARGET_STEP
-                binding.speedSeekbar.progress =
-                    ((viewModel.lastSession?.speed ?: SPEED_DEFAULT) - SPEED_MIN) / SPEED_STEP
-                binding.timeSeekbar.progress =
-                    ((viewModel.lastSession?.movementTime ?: TIME_DEFAULT) - TIME_MIN) / TIME_STEP
+                binding.totalSlider.value =
+                    viewModel.lastSession?.totalAmount?.toFloat() ?: TOTAL_DEFAULT
+                binding.targetSlider.value =
+                    viewModel.lastSession?.targetAmount?.toFloat() ?: TARGET_DEFAULT
+                binding.speedSlider.value =
+                    viewModel.lastSession?.speed?.toFloat() ?: SPEED_DEFAULT
+                binding.timeSlider.value =
+                    viewModel.lastSession?.movementTime?.toFloat() ?: TIME_DEFAULT
             }
         }
     }

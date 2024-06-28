@@ -8,8 +8,10 @@
 
     <Button
         android:id="@+id/test_button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="1000dp"
         android:paddingLeft="32dp"
         android:paddingTop="15dp"
         android:paddingRight="32dp"
@@ -23,8 +25,10 @@
 
     <Button
         android:id="@+id/statistics_button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxWidth="1000dp"
         android:paddingLeft="32dp"
         android:paddingTop="15dp"
         android:paddingRight="32dp"

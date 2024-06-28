@@ -1,5 +1,7 @@
 package ru.hse.multitracker.ui.view_models
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +14,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.hse.multitracker.MultiTrackerApplication
 import ru.hse.multitracker.data.database.entities.PatientWithTestSessions
+import ru.hse.multitracker.data.database.entities.TestSession
 import ru.hse.multitracker.data.repositories.PatientFullName
 import ru.hse.multitracker.data.repositories.PatientRepository
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 class StatisticsViewModel(private val repository: PatientRepository) : ViewModel() {
     val allPatientNames: LiveData<List<PatientFullName>> = repository.allPatients.asLiveData()
@@ -60,6 +66,23 @@ class StatisticsViewModel(private val repository: PatientRepository) : ViewModel
         // set currentPatient value to null
         launch(Dispatchers.Main) {
             _currentPatient.value = null
+        }
+    }
+
+    fun editDocument(uri: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
+        val contentResolver = context.contentResolver
+        try {
+            contentResolver.openFileDescriptor(uri, "w")?.use {
+                FileOutputStream(it.fileDescriptor).use { out ->
+                    out.write(CsvGenerator.generateCsv(
+                        currentPatient.value?.sessions ?: listOf<TestSession>()
+                    ).toByteArray())
+                }
+            }
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 

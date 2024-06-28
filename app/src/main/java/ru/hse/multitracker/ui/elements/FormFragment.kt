@@ -30,7 +30,7 @@ class FormFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getLong("id")
         id?.let {
-            if(it != 0L) {
+            if (it != 0L) {
                 viewModel.getPatient(it)
             }
         }
@@ -40,66 +40,80 @@ class FormFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.currentPatient.observe(viewLifecycleOwner) {
-            binding.nameEdittext.setText(it?.name)
-            binding.surnameEdittext.setText(it?.surname)
-            binding.patronymicEdittext.setText(it?.patronymic)
-            binding.ageEdittext.setText(it?.age?.toString())
+            binding.nameTextfield.editText?.setText(it?.name)
+            binding.surnameTextfield.editText?.setText(it?.surname)
+            binding.patronymicTextfield.editText?.setText(it?.patronymic)
+            binding.ageTextfield.editText?.setText(it?.age?.toString())
             if (it?.sex == true) {
                 binding.maleRadiobutton.isChecked = true
             }
             if (it?.sex == false) {
                 binding.femaleRadiobutton.isChecked = true
             }
-            binding.diagnosisEdittext.setText(it?.diagnosis)
+            binding.diagnosisTextfield.editText?.setText(it?.diagnosis)
         }
+    }
+
+    /**
+     * Check that all fields filled correct and set errors if not
+     * @return true if all fields are filled correct else false
+     */
+    private fun checkFields(): Boolean {
+        var check = true
+        binding.nameTextfield.error = null
+        binding.surnameTextfield.error = null
+        binding.ageTextfield.error = null
+
+        if (binding.nameTextfield.editText?.text.isNullOrBlank()) {
+            binding.nameTextfield.error = getString(R.string.empty_name_error)
+            check = false
+        }
+        if (binding.surnameTextfield.editText?.text.isNullOrBlank()) {
+            binding.surnameTextfield.error = getString(R.string.empty_surname_error)
+            check = false
+        }
+        if (!binding.ageTextfield.editText?.text.isNullOrBlank()) {
+            val age = binding.ageTextfield.editText?.text.toString().toIntOrNull()
+            if (age == null || age > 100 || age < 0) {
+                binding.ageTextfield.error = getString(R.string.age_error)
+                check = false
+            }
+        }
+        return check
     }
 
     private fun setListeners() {
         binding.saveButton.setOnClickListener { view ->
-            if (binding.nameEdittext.text.isEmpty()) {
-                binding.nameEdittext.error = getString(R.string.empty_name_error)
-                return@setOnClickListener
+            if (checkFields()) {
+                val age = binding.ageTextfield.editText?.text.toString().toIntOrNull()
+
+                viewModel.onSaveClicked(
+                    name = binding.nameTextfield.editText!!.text.toString(),
+                    surname = binding.surnameTextfield.editText!!.text.toString(),
+                    age = age,
+                    diagnosis =
+                    if (binding.diagnosisTextfield.editText?.text.isNullOrBlank()) {
+                        null
+                    } else {
+                        binding.diagnosisTextfield.editText?.text.toString()
+                    },
+                    patronymic =
+                    if (binding.patronymicTextfield.editText?.text.isNullOrBlank()) {
+                        null
+                    } else {
+                        binding.patronymicTextfield.editText?.text.toString()
+                    },
+                    sex =
+                    if (binding.maleRadiobutton.isChecked) {
+                        true
+                    } else if (binding.femaleRadiobutton.isChecked) {
+                        false
+                    } else {
+                        null
+                    }
+                )
+                view.findNavController().popBackStack()
             }
-            if (binding.surnameEdittext.text.isEmpty()) {
-                binding.surnameEdittext.error = getString(R.string.empty_surname_error)
-                return@setOnClickListener
-            }
-            val age: Int?
-            if(binding.ageEdittext.text.isEmpty()) {
-                age = null
-            } else {
-                age = binding.ageEdittext.text.toString().toIntOrNull()
-                if (age == null || age > 100 || age < 0) {
-                    binding.ageEdittext.error = getString(R.string.age_error)
-                    return@setOnClickListener
-                }
-            }
-            viewModel.onSaveClicked(
-                name = binding.nameEdittext.text.toString(),
-                surname = binding.surnameEdittext.text.toString(),
-                age = age,
-                diagnosis =
-                if (binding.diagnosisEdittext.text.isNotEmpty()) {
-                    binding.diagnosisEdittext.text.toString()
-                } else {
-                    null
-                },
-                patronymic =
-                if (binding.patronymicEdittext.text.isNotEmpty()) {
-                    binding.patronymicEdittext.text.toString()
-                } else {
-                    null
-                },
-                sex =
-                if (binding.maleRadiobutton.isChecked) {
-                    true
-                } else if (binding.femaleRadiobutton.isChecked) {
-                    false
-                } else {
-                    null
-                }
-            )
-            view.findNavController().popBackStack()
         }
     }
 

@@ -1,11 +1,13 @@
 package ru.hse.multitracker.ui.elements
 
 import android.app.AlertDialog
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -25,6 +27,13 @@ class StatisticsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var graph: ResultsGraph
     private lateinit var patientNameAdapter: PatientNameAdapter
+    val createDoc = registerForActivityResult(CreateDocument("text/csv"))
+    { uri: Uri? ->
+        // Handle the returned Uri
+        if (uri != null) {
+            viewModel.editDocument(uri, requireContext())
+        }
+    }
 
     /**
      * Represent statistics of test sessions' results
@@ -43,7 +52,8 @@ class StatisticsFragment : Fragment() {
             meanAccuracyPercent = (sessions.sumOf { it.accuracy } / sessions.size * 100).roundToInt(),
             bestReactionTime = sessions.minOf { it.reactionTime },
             worstReactionTime = sessions.maxOf { it.reactionTime },
-            meanReactionTime = (sessions.sumOf { it.reactionTime }.toDouble() / sessions.size).roundToInt()
+            meanReactionTime = (sessions.sumOf { it.reactionTime }
+                .toDouble() / sessions.size).roundToInt()
         )
     }
 
@@ -108,6 +118,10 @@ class StatisticsFragment : Fragment() {
                     bundle
                 )
             }
+        }
+
+        binding.downloadCsvButton.setOnClickListener { view ->
+            createDoc.launch("${viewModel.currentPatient.value?.patient?.surname}.csv")
         }
     }
 

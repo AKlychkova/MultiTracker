@@ -8,6 +8,7 @@
     <color name="green">#48B6A2</color>
     <color name="red_semitransparent">#80DA6027</color>
     <color name="green_semitransparent">#8048B6A2</color>
+    <color name="dark_grey">#8F9193</color>
 
     <color name="md_theme_primary">#ffdc83</color>
     <color name="md_theme_onPrimary">#221b04</color>

@@ -6,87 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.elements.FormFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_textfield"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:hint="@string/name"
-        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:layout_constraintBottom_toTopOf="@+id/surname_textfield"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.4">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/surname_textfield"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/surname"
-        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:layout_constraintBottom_toTopOf="@+id/patronymic_textfield"
-        app:layout_constraintStart_toStartOf="@+id/name_textfield"
-        app:layout_constraintTop_toBottomOf="@+id/name_textfield"
-        app:layout_constraintWidth_percent="0.4">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/patronymic_textfield"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/patronymic"
-        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:layout_constraintBottom_toTopOf="@+id/age_textfield"
-        app:layout_constraintStart_toStartOf="@+id/surname_textfield"
-        app:layout_constraintTop_toBottomOf="@+id/surname_textfield"
-        app:layout_constraintWidth_percent="0.4">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/age_textfield"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/age"
-        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:layout_constraintBottom_toTopOf="@+id/diagnosis_textfield"
-        app:layout_constraintStart_toStartOf="@+id/patronymic_textfield"
-        app:layout_constraintTop_toBottomOf="@+id/patronymic_textfield"
-        app:layout_constraintWidth_percent="0.4">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
@@ -118,28 +37,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/sex"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/name_textfield"
+        app:layout_constraintStart_toEndOf="@+id/textfields_scrollview"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/diagnosis_textfield"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/diagnosis"
-        app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/age_textfield"
-        app:layout_constraintTop_toBottomOf="@+id/age_textfield"
-        app:layout_constraintWidth_percent="0.4">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/save_button"
@@ -151,5 +50,116 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:id="@+id/textfields_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.4">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:layout_constraintWidth_percent="0.4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/surname_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/surname"
+                app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:layout_constraintWidth_percent="0.4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patronymic_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/patronymic"
+                app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:layout_constraintWidth_percent="0.4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/age_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/age"
+                app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:layout_constraintWidth_percent="0.4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/diagnosis_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/diagnosis"
+                app:boxStrokeColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/md_theme_primaryFixedDim_mediumContrast"
+                app:layout_constraintWidth_percent="0.4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

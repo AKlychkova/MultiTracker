@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId = "ru.hse.multitracker"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
-        versionName = "1.1"
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
